@@ -11,7 +11,7 @@
     <div class="mb-5"><span class="font-weight-black">1850</span> <span>Dataset ditemukan</span></div>
 
     <div>
-      <v-card>
+      <v-card to="/listdataset">
         <v-row no-gutters class="pa-5">
           <v-col cols="1" class="my-auto">
             <v-icon size="65" :color="iconColor">mdi-file-document-outline</v-icon>
