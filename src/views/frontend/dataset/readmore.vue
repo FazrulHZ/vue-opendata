@@ -11,7 +11,10 @@
             <datasetCard />
           </div>
         </v-col>
-        <v-col cols="12" md="9">
+        <v-col cols="12" md="1" class="text-center">
+          <v-divider vertical></v-divider>
+        </v-col>
+        <v-col cols="12" md="8">
           <div>
             <h2>Data Jumlah Penduduk Berdasarkan Agama Per Kelurahan</h2>
             <div class="mt-2">
@@ -23,13 +26,13 @@
                 <v-col cols="12" md="6">
                   <div>
                     <h4>Topik :</h4>
-                    <v-chip color="green" text-color="white" label class="mt-2">
+                    <v-chip small color="green" text-color="white" label class="mt-2">
                       Green Chip
                     </v-chip>
                   </div>
                   <div class="mt-5">
                     <h4>Tag :</h4>
-                    <v-chip color="green" text-color="white" label class="mt-2">
+                    <v-chip small color="green" text-color="white" label class="mt-2">
                       Green Chip
                     </v-chip>
                   </div>

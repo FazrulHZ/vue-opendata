@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import CHeader from '@/layout/header'
+import CHeader from '@/layout/frontend/header'
 export default {
   components: {
     CHeader

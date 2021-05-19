@@ -1,8 +1,8 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 
-import Main from '../layout/main.vue'
-import SubMain from '../layout/submain.vue'
+import Main from '../layout/frontend/main.vue'
+import SubMain from '../layout/frontend/submain.vue'
 
 import Home from '../views/frontend/Home.vue'
 import Data from '../views/frontend/Data.vue'
@@ -15,6 +15,7 @@ import readmoreDataset from '../views/frontend/dataset/readmore.vue'
 Vue.use(VueRouter)
 
 const routes = [
+  // Front End
   {
     path: '/',
     name: 'Main',
@@ -52,6 +53,33 @@ const routes = [
         {
           path: '/readmore',
           component: readmoreDataset
+        }
+      ]
+  },
+
+  // Admin
+  {
+    path: '/admin',
+    component: () => import(
+      /* webpackChunkName: "adminMain" */
+      /* webpackPrefetch: true */
+      /* webpackPreload: true */
+      '../layout/admin/main.vue'
+    ),
+    meta: {
+      title: 'Admin'
+      // requiresAuth: true
+    },
+    children:
+      [
+        {
+          path: '/admin',
+          component: () => import(
+            /* webpackChunkName: "adminHome" */
+            /* webpackPrefetch: true */
+            /* webpackPreload: true */
+            '../views/admin/Home.vue'
+          )
         }
       ]
   }
