@@ -1,8 +1,8 @@
 <template>
-  <v-app-bar app>
+  <v-app-bar app color="primary" dark>
     <v-app-bar-nav-icon @click="toggleDrawer()"></v-app-bar-nav-icon>
 
-    <v-toolbar-title>Application</v-toolbar-title>
+    <v-toolbar-title>Kota Gorontalo</v-toolbar-title>
   </v-app-bar>
 </template>
 

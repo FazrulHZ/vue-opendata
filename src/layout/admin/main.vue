@@ -4,7 +4,7 @@
 
     <Header />
 
-    <v-main>
+    <v-main style="background: #EEEEEE;">
       <div class="ma-10">
         <router-view />
       </div>
@@ -22,6 +22,10 @@ export default {
     Menu
   },
 
-  data: () => ({ drawer: null })
+  data: () => ({ drawer: null }),
+
+  mounted() {
+    this.$router.push('/admin/main')
+  }
 }
 </script>

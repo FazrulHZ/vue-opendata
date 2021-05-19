@@ -73,12 +73,21 @@ const routes = [
     children:
       [
         {
-          path: '/admin',
+          path: '/admin/main',
           component: () => import(
             /* webpackChunkName: "adminHome" */
             /* webpackPrefetch: true */
             /* webpackPreload: true */
             '../views/admin/Home.vue'
+          )
+        },
+        {
+          path: '/admin/organisasi',
+          component: () => import(
+            /* webpackChunkName: "adminOrganisasi" */
+            /* webpackPrefetch: true */
+            /* webpackPreload: true */
+            '../views/admin/Organisasi.vue'
           )
         }
       ]
