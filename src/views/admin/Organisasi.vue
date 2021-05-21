@@ -1,112 +1,143 @@
 <template>
   <div>
     <div>
-      <v-card outlined class="py-5 px-5 mb-5 elevation-2">
-        <h3>Data Organisasi</h3>
+      <v-card outlined class="py-3 px-5 mb-5 elevation-2">
+        <v-row no-gutters>
+          <h3 class="my-auto">Data Organisasi</h3>
+          <v-spacer></v-spacer>
+          <CModalAdd />
+        </v-row>
       </v-card>
     </div>
-    <v-data-table :headers="headers" :items="desserts" item-key="name" class="elevation-1"></v-data-table>
+    <v-data-table :headers="headers" :items="organisasis" item-key="name" class="elevation-1">
+      <template v-slot:top>
+        <v-alert v-model="alertBerhasil" type="success" dense dismissible>
+          {{ alertMassage }}
+        </v-alert>
+        <v-alert v-model="alertGagal" type="error" dense dismissible>
+          {{ alertMassage }}
+        </v-alert>
+        <orgModalView />
+      </template>
+      <template v-slot:[`item.nomor`]="{ item }">
+        {{
+          organisasis
+            .map(function(x) {
+              return x.org_id
+            })
+            .indexOf(item.org_id) + 1
+        }}
+      </template>
+      <template v-slot:[`item.action`]="{ item }">
+        <v-icon small class="mr-1" @click="viewItem(item)">
+          mdi-archive
+        </v-icon>
+        <v-icon small class="mr-1" @click="editItem(item)">
+          mdi-pencil
+        </v-icon>
+        <v-icon small @click="deleteItem(item)">
+          mdi-delete
+        </v-icon>
+      </template>
+    </v-data-table>
   </div>
 </template>
 
 <script>
+import CModalAdd from '@/components/organisasi/modalAdd'
+import orgModalView from '@/components/organisasi/modalView'
+import modalView from '@/store/organisasi/modalView'
+import refreshView from '@/store/organisasi/viewOrganisasi'
+
 export default {
-  data: () => ({
-    desserts: [
-      {
-        name: 'Frozen Yogurt',
-        calories: 159,
-        fat: 6.0,
-        carbs: 24,
-        protein: 4.0,
-        iron: '1%'
-      },
-      {
-        name: 'Ice cream sandwich',
-        calories: 237,
-        fat: 9.0,
-        carbs: 37,
-        protein: 4.3,
-        iron: '1%'
-      },
-      {
-        name: 'Eclair',
-        calories: 262,
-        fat: 16.0,
-        carbs: 23,
-        protein: 6.0,
-        iron: '7%'
-      },
-      {
-        name: 'Cupcake',
-        calories: 305,
-        fat: 3.7,
-        carbs: 67,
-        protein: 4.3,
-        iron: '8%'
-      },
-      {
-        name: 'Gingerbread',
-        calories: 356,
-        fat: 16.0,
-        carbs: 49,
-        protein: 3.9,
-        iron: '16%'
-      },
-      {
-        name: 'Jelly bean',
-        calories: 375,
-        fat: 0.0,
-        carbs: 94,
-        protein: 0.0,
-        iron: '0%'
-      },
-      {
-        name: 'Lollipop',
-        calories: 392,
-        fat: 0.2,
-        carbs: 98,
-        protein: 0,
-        iron: '2%'
-      },
-      {
-        name: 'Honeycomb',
-        calories: 408,
-        fat: 3.2,
-        carbs: 87,
-        protein: 6.5,
-        iron: '45%'
-      },
-      {
-        name: 'Donut',
-        calories: 452,
-        fat: 25.0,
-        carbs: 51,
-        protein: 4.9,
-        iron: '22%'
-      },
-      {
-        name: 'KitKat',
-        calories: 518,
-        fat: 26.0,
-        carbs: 65,
-        protein: 7,
-        iron: '6%'
+  components: {
+    CModalAdd,
+    orgModalView
+  },
+
+  computed: {
+    refresh: {
+      get() {
+        return refreshView.state.Refresh
       }
-    ],
-    headers: [
-      {
-        text: 'Dessert (100g serving)',
-        align: 'start',
-        sortable: false,
-        value: 'name'
+    },
+    alertMassage: {
+      get() {
+        return refreshView.state.alertMassage
+      }
+    },
+    success: {
+      get() {
+        return refreshView.state.success
       },
-      { text: 'Calories', value: 'calories' },
-      { text: 'Fat (g)', value: 'fat' },
-      { text: 'Carbs (g)', value: 'carbs' },
-      { text: 'Protein (g)', value: 'protein' },
-      { text: 'Iron (%)', value: 'iron' }
+      set(value) {
+        refreshView.commit('alert', value)
+      }
+    },
+    alertBerhasil: {
+      get() {
+        return refreshView.state.alertBerhasil
+      },
+      set(value) {
+        refreshView.commit('berhasilAlert', value)
+      }
+    },
+    alertGagal: {
+      get() {
+        return refreshView.state.alertGagal
+      },
+      set(value) {
+        refreshView.commit('gagalAlert', value)
+      }
+    }
+  },
+
+  data: () => ({
+    organisasis: [],
+    organisasi: {},
+
+    viewIndex: '',
+    editedIndex: '',
+    dleteIndex: '',
+
+    headers: [
+      { text: 'Nomor', value: 'nomor', width: '100px', align: 'center', sortable: false },
+      { text: 'Nama Organisasi', align: 'start', value: 'org_nama' },
+      { text: 'Action', value: 'action', width: '100px' }
     ]
-  })
+  }),
+
+  mounted() {
+    this.getData()
+  },
+
+  methods: {
+    getData() {
+      this.http
+        .get(process.env.VUE_APP_API_BASE + 'organisasi')
+        .then(res => {
+          this.organisasis = res.data.data
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+
+    viewItem(item) {
+      console.log('LIHAT')
+      this.viewIndex = this.organisasis.indexOf(item)
+      this.organisasi = Object.assign({}, item)
+      modalView.commit('toggleModal', true)
+      modalView.commit('viewModal', Object.assign({}, item))
+    },
+
+    editItem() {
+      console.log('EDIT')
+    },
+
+    deleteItem() {
+      console.log('HAPUS')
+    }
+  }
 }
 </script>
