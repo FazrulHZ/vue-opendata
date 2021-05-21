@@ -9,15 +9,20 @@
         </v-row>
       </v-card>
     </div>
+
+    <div>
+      <v-alert v-model="alertBerhasil" type="success" dense dismissible>
+        {{ alertMassage }}
+      </v-alert>
+      <v-alert v-model="alertGagal" type="error" dense dismissible>
+        {{ alertMassage }}
+      </v-alert>
+    </div>
+
     <v-data-table :headers="headers" :items="organisasis" item-key="name" class="elevation-1">
       <template v-slot:top>
-        <v-alert v-model="alertBerhasil" type="success" dense dismissible>
-          {{ alertMassage }}
-        </v-alert>
-        <v-alert v-model="alertGagal" type="error" dense dismissible>
-          {{ alertMassage }}
-        </v-alert>
         <orgModalView />
+        <CModalEdit />
       </template>
       <template v-slot:[`item.nomor`]="{ item }">
         {{
@@ -45,13 +50,18 @@
 
 <script>
 import CModalAdd from '@/components/organisasi/modalAdd'
+import CModalEdit from '@/components/organisasi/modalEdit'
+
 import orgModalView from '@/components/organisasi/modalView'
 import modalView from '@/store/organisasi/modalView'
+import modalEdit from '@/store/organisasi/modalEdit'
+import modalHapus from '@/store/organisasi/modalHapus'
 import refreshView from '@/store/organisasi/viewOrganisasi'
 
 export default {
   components: {
     CModalAdd,
+    CModalEdit,
     orgModalView
   },
 
@@ -92,6 +102,16 @@ export default {
     }
   },
 
+  watch: {
+    refresh() {
+      this.getData()
+      setTimeout(() => {
+        this.alertGagal = false
+        this.alertBerhasil = false
+      }, 5000)
+    }
+  },
+
   data: () => ({
     organisasis: [],
     organisasi: {},
@@ -116,6 +136,7 @@ export default {
       this.http
         .get(process.env.VUE_APP_API_BASE + 'organisasi')
         .then(res => {
+          refreshView.commit('refreshData', false)
           this.organisasis = res.data.data
         })
         .catch(err => {
@@ -124,19 +145,24 @@ export default {
     },
 
     viewItem(item) {
-      console.log('LIHAT')
       this.viewIndex = this.organisasis.indexOf(item)
       this.organisasi = Object.assign({}, item)
       modalView.commit('toggleModal', true)
       modalView.commit('viewModal', Object.assign({}, item))
     },
 
-    editItem() {
-      console.log('EDIT')
+    editItem(item) {
+      this.editedIndex = this.organisasis.indexOf(item)
+      this.organisasi = Object.assign({}, item)
+      modalEdit.commit('toggleModal', true)
+      modalEdit.commit('viewModal', Object.assign({}, item))
     },
 
-    deleteItem() {
-      console.log('HAPUS')
+    deleteItem(item) {
+      this.dleteIndex = this.organisasis.indexOf(item)
+      this.organisasi = Object.assign({}, item)
+      modalHapus.commit('toggleModal', true)
+      modalHapus.commit('viewModal', Object.assign({}, item))
     }
   }
 }
