@@ -21,7 +21,7 @@
 
     <v-data-table :headers="headers" :items="grups" item-key="name" class="elevation-1">
       <template v-slot:top>
-        <orgModalView />
+        <CModalView />
         <CModalEdit />
         <CModalDelete />
       </template>
@@ -53,8 +53,8 @@
 import CModalAdd from '@/components/grup/modalAdd'
 import CModalEdit from '@/components/grup/modalEdit'
 import CModalDelete from '@/components/grup/modalDelete'
+import CModalView from '@/components/grup/modalView'
 
-import orgModalView from '@/components/grup/modalView'
 import modalView from '@/store/grup/modalView'
 import modalEdit from '@/store/grup/modalEdit'
 import modalHapus from '@/store/grup/modalHapus'
@@ -65,7 +65,7 @@ export default {
     CModalAdd,
     CModalEdit,
     CModalDelete,
-    orgModalView
+    CModalView
   },
 
   computed: {

@@ -21,7 +21,7 @@
 
     <v-data-table :headers="headers" :items="organisasis" item-key="name" class="elevation-1">
       <template v-slot:top>
-        <orgModalView />
+        <CModalView />
         <CModalEdit />
         <CModalDelete />
       </template>
@@ -53,8 +53,8 @@
 import CModalAdd from '@/components/organisasi/modalAdd'
 import CModalEdit from '@/components/organisasi/modalEdit'
 import CModalDelete from '@/components/organisasi/modalDelete'
+import CModalView from '@/components/organisasi/modalView'
 
-import orgModalView from '@/components/organisasi/modalView'
 import modalView from '@/store/organisasi/modalView'
 import modalEdit from '@/store/organisasi/modalEdit'
 import modalHapus from '@/store/organisasi/modalHapus'
@@ -65,7 +65,7 @@ export default {
     CModalAdd,
     CModalEdit,
     CModalDelete,
-    orgModalView
+    CModalView
   },
 
   computed: {
