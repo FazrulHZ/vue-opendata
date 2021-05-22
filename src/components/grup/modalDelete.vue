@@ -2,7 +2,7 @@
   <v-dialog v-model="modalHapus" max-width="50%">
     <v-card>
       <v-toolbar dark color="primary" dense flat>
-        <v-toolbar-title class="subtitle-1">Hapus Data Organisasi</v-toolbar-title>
+        <v-toolbar-title class="subtitle-1">Hapus Data grup</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-btn icon dark @click="closeModal()">
           <v-icon>mdi-close</v-icon>
@@ -32,8 +32,8 @@
 </template>
 
 <script>
-import modalHapus from '@/store/organisasi/modalHapus'
-import refreshView from '@/store/organisasi/viewOrganisasi'
+import modalHapus from '@/store/grup/modalHapus'
+import refreshView from '@/store/grup/viewGrup'
 
 export default {
   computed: {
@@ -47,7 +47,7 @@ export default {
     },
     hapusItem: {
       get() {
-        return modalHapus.state.organisasi
+        return modalHapus.state.grup
       },
       set(value) {
         console.log(value)
@@ -65,7 +65,7 @@ export default {
     async hapus() {
       this.btnLoading = false
 
-      const url = process.env.VUE_APP_API_BASE + 'organisasi/' + this.hapusItem.org_id
+      const url = process.env.VUE_APP_API_BASE + 'grup/' + this.hapusItem.grup_id
       this.http
         .delete(url)
         .then(response => {
