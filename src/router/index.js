@@ -89,6 +89,15 @@ const routes = [
             /* webpackPreload: true */
             '../views/admin/Organisasi.vue'
           )
+        },
+        {
+          path: '/admin/grup',
+          component: () => import(
+            /* webpackChunkName: "adminOrganisasi" */
+            /* webpackPrefetch: true */
+            /* webpackPreload: true */
+            '../views/admin/Grup.vue'
+          )
         }
       ]
   }

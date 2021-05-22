@@ -1,8 +1,8 @@
 <template>
-  <v-dialog v-model="modalHapus" max-width="50%">
+  <v-dialog v-model="modalEdit" max-width="50%">
     <v-card>
       <v-toolbar dark color="primary" dense flat>
-        <v-toolbar-title class="subtitle-1">Hapus Data Organisasi</v-toolbar-title>
+        <v-toolbar-title class="subtitle-1">Edit Data Organisasi</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-btn icon dark @click="closeModal()">
           <v-icon>mdi-close</v-icon>
@@ -11,19 +11,33 @@
 
       <v-form ref="form">
         <div class="px-5 py-5">
-          <v-col cols="12" class="mb-n5">
-            <h3>Apakah Anda Yakin Menghapus Data Ini?</h3>
+          <!-- Nama Organisasi -->
+          <v-col cols="12" class="mb-n8">
+            <span class="subtitle-2">Nama Organisasi</span>
+            <v-text-field dense flat outlined class="mt-2" v-model="editedItem.org_nama"></v-text-field>
           </v-col>
 
+          <!-- Preview -->
           <v-col cols="12">
-            <span>Data yang telah dihapus tidak akan bisa dikembalikan!</span>
+            <span class="subtitle-2">Foto Organisasi</span>
+            <v-img :src="getIMG(editedItem.org_foto)" max-width="200"></v-img>
+          </v-col>
+
+          <!-- Foto -->
+          <v-col cols="12" class="mb-n8">
+            <span class="subtitle-2">Unggah Foto Baru</span>
+            <v-file-input dense flat outlined prepend-icon accept="image/png, image/jpeg, image/bmp" placeholder="Pilih Foto Organisasi" append-icon="mdi-camera" @change="onFile" ref="avatar"></v-file-input>
+          </v-col>
+
+          <!-- Preview -->
+          <v-col cols="12">
+            <v-img :src="urlImage" max-width="200"></v-img>
           </v-col>
 
           <hr />
-          <div class="text-right mr-5 mt-5">
-            <v-btn class="mr-2" v-if="btnLoading" color="error" depressed @click="hapus()">Ya</v-btn>
-            <v-btn class="mr-2" v-else color="error" depressed loading>Ya</v-btn>
-            <v-btn class="black--text" color="secondary" @click="closeModal()" depressed light>Tidak</v-btn>
+          <div class="text-right mr-5 mt-5 pb-5">
+            <v-btn v-if="btnLoading" small color="primary" depressed @click="edit()">SIMPAN</v-btn>
+            <v-btn v-else small color="primary" depressed loading>SIMPAN</v-btn>
           </div>
         </div>
       </v-form>
@@ -32,22 +46,22 @@
 </template>
 
 <script>
-import modalHapus from '@/store/organisasi/modalHapus'
+import modalEdit from '@/store/organisasi/modalEdit'
 import refreshView from '@/store/organisasi/viewOrganisasi'
 
 export default {
   computed: {
-    modalHapus: {
+    modalEdit: {
       get() {
-        return modalHapus.state.modalHapus
+        return modalEdit.state.modalEdit
       },
       set(value) {
-        modalHapus.commit('toggleModal', value)
+        modalEdit.commit('toggleModal', value)
       }
     },
-    hapusItem: {
+    editedItem: {
       get() {
-        return modalHapus.state.organisasi
+        return modalEdit.state.organisasi
       },
       set(value) {
         console.log(value)
@@ -62,12 +76,21 @@ export default {
   }),
 
   methods: {
-    async hapus() {
+    getIMG(value) {
+      return 'http://localhost:3000/upload/organisasiGambar/' + value
+    },
+
+    async edit() {
       this.btnLoading = false
 
-      const url = process.env.VUE_APP_API_BASE + 'organisasi/' + this.hapusItem.org_id
+      const data = new FormData()
+      data.append('org_id', this.editedItem.org_id)
+      data.append('org_nama', this.editedItem.org_nama)
+      data.append('org_foto', this.org_foto)
+
+      const url = process.env.VUE_APP_API_BASE + 'organisasi'
       this.http
-        .delete(url)
+        .put(url, data)
         .then(response => {
           this.btnLoading = true
           if (response.data.success) {
@@ -96,8 +119,13 @@ export default {
         })
     },
 
+    onFile(value) {
+      this.org_foto = value
+      this.urlImage = URL.createObjectURL(this.org_foto)
+    },
+
     closeModal() {
-      this.modalHapus = false
+      this.modalEdit = false
     }
   }
 }

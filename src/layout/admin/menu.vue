@@ -29,6 +29,13 @@
           <v-list-item-title>Organisasi</v-list-item-title>
         </v-list-item>
 
+        <v-list-item :to="'/admin/grup'">
+          <v-list-item-icon>
+            <v-icon>mdi-format-list-text</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title>Grup</v-list-item-title>
+        </v-list-item>
+
         <v-divider></v-divider>
       </v-list-item-group>
     </v-list>

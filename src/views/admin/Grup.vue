@@ -3,7 +3,7 @@
     <div>
       <v-card outlined class="py-3 px-5 mb-5 elevation-2">
         <v-row no-gutters>
-          <h3 class="my-auto">Data Organisasi</h3>
+          <h3 class="my-auto">Daftar Grup</h3>
           <v-spacer></v-spacer>
           <CModalAdd />
         </v-row>
@@ -19,7 +19,7 @@
       </v-alert>
     </div>
 
-    <v-data-table :headers="headers" :items="organisasis" item-key="name" class="elevation-1">
+    <v-data-table :headers="headers" :items="grups" item-key="name" class="elevation-1">
       <template v-slot:top>
         <orgModalView />
         <CModalEdit />
@@ -27,7 +27,7 @@
       </template>
       <template v-slot:[`item.nomor`]="{ item }">
         {{
-          organisasis
+          grups
             .map(function(x) {
               return x.org_id
             })
@@ -50,15 +50,15 @@
 </template>
 
 <script>
-import CModalAdd from '@/components/organisasi/modalAdd'
-import CModalEdit from '@/components/organisasi/modalEdit'
-import CModalDelete from '@/components/organisasi/modalDelete'
+import CModalAdd from '@/components/grup/modalAdd'
+import CModalEdit from '@/components/grup/modalEdit'
+import CModalDelete from '@/components/grup/modalDelete'
 
-import orgModalView from '@/components/organisasi/modalView'
-import modalView from '@/store/organisasi/modalView'
-import modalEdit from '@/store/organisasi/modalEdit'
-import modalHapus from '@/store/organisasi/modalHapus'
-import refreshView from '@/store/organisasi/viewOrganisasi'
+import orgModalView from '@/components/grup/modalView'
+import modalView from '@/store/grup/modalView'
+import modalEdit from '@/store/grup/modalEdit'
+import modalHapus from '@/store/grup/modalHapus'
+import refreshView from '@/store/grup/viewGrup'
 
 export default {
   components: {
@@ -116,8 +116,8 @@ export default {
   },
 
   data: () => ({
-    organisasis: [],
-    organisasi: {},
+    grups: [],
+    grup: {},
 
     viewIndex: '',
     editedIndex: '',
@@ -125,7 +125,8 @@ export default {
 
     headers: [
       { text: 'Nomor', value: 'nomor', width: '100px', align: 'center', sortable: false },
-      { text: 'Nama Organisasi', align: 'start', value: 'org_nama' },
+      { text: 'Nama Grup', align: 'start', value: 'grup_nama' },
+      { text: 'Deskripsi Grup', align: 'start', value: 'grup_deskripsi' },
       { text: 'Action', value: 'action', width: '100px' }
     ]
   }),
@@ -137,10 +138,10 @@ export default {
   methods: {
     getData() {
       this.http
-        .get(process.env.VUE_APP_API_BASE + 'organisasi')
+        .get(process.env.VUE_APP_API_BASE + 'grup')
         .then(res => {
           refreshView.commit('refreshData', false)
-          this.organisasis = res.data.data
+          this.grups = res.data.data
         })
         .catch(err => {
           console.log(err)
@@ -148,22 +149,22 @@ export default {
     },
 
     viewItem(item) {
-      this.viewIndex = this.organisasis.indexOf(item)
-      this.organisasi = Object.assign({}, item)
+      this.viewIndex = this.grups.indexOf(item)
+      this.grup = Object.assign({}, item)
       modalView.commit('toggleModal', true)
       modalView.commit('viewModal', Object.assign({}, item))
     },
 
     editItem(item) {
-      this.editedIndex = this.organisasis.indexOf(item)
-      this.organisasi = Object.assign({}, item)
+      this.editedIndex = this.grups.indexOf(item)
+      this.grup = Object.assign({}, item)
       modalEdit.commit('toggleModal', true)
       modalEdit.commit('viewModal', Object.assign({}, item))
     },
 
     deleteItem(item) {
-      this.dleteIndex = this.organisasis.indexOf(item)
-      this.organisasi = Object.assign({}, item)
+      this.dleteIndex = this.grups.indexOf(item)
+      this.grup = Object.assign({}, item)
       modalHapus.commit('toggleModal', true)
       modalHapus.commit('viewModal', Object.assign({}, item))
     }
