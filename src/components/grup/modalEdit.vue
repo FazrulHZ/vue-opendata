@@ -2,7 +2,7 @@
   <v-dialog v-model="modalEdit" max-width="50%">
     <v-card>
       <v-toolbar dark color="primary" dense flat>
-        <v-toolbar-title class="subtitle-1">Edit Data Organisasi</v-toolbar-title>
+        <v-toolbar-title class="subtitle-1">Edit Data grup</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-btn icon dark @click="closeModal()">
           <v-icon>mdi-close</v-icon>
@@ -11,22 +11,28 @@
 
       <v-form ref="form">
         <div class="px-5 py-5">
-          <!-- Nama Organisasi -->
+          <!-- Nama Grup -->
           <v-col cols="12" class="mb-n8">
-            <span class="subtitle-2">Nama Organisasi</span>
-            <v-text-field dense flat outlined class="mt-2" v-model="editedItem.org_nama"></v-text-field>
+            <span class="subtitle-2">Nama Grup</span>
+            <v-text-field dense flat outlined class="mt-2" v-model="editedItem.grup_nama"></v-text-field>
+          </v-col>
+
+          <!-- Nama Grup -->
+          <v-col cols="12" class="mb-n8">
+            <span class="subtitle-2">Deskripsi Grup</span>
+            <v-text-field dense flat outlined class="mt-2" v-model="editedItem.grup_deskripsi"></v-text-field>
           </v-col>
 
           <!-- Preview -->
           <v-col cols="12">
-            <span class="subtitle-2">Foto Organisasi</span>
-            <v-img :src="getIMG(editedItem.org_foto)" max-width="200"></v-img>
+            <span class="subtitle-2">Foto Grup</span>
+            <v-img :src="getIMG(editedItem.grup_foto)" max-width="200"></v-img>
           </v-col>
 
           <!-- Foto -->
           <v-col cols="12" class="mb-n8">
             <span class="subtitle-2">Unggah Foto Baru</span>
-            <v-file-input dense flat outlined prepend-icon accept="image/png, image/jpeg, image/bmp" placeholder="Pilih Foto Organisasi" append-icon="mdi-camera" @change="onFile" ref="avatar"></v-file-input>
+            <v-file-input dense flat outlined prepend-icon accept="image/png, image/jpeg, image/bmp" placeholder="Pilih Foto grup" append-icon="mdi-camera" @change="onFile" ref="avatar"></v-file-input>
           </v-col>
 
           <!-- Preview -->
@@ -46,8 +52,8 @@
 </template>
 
 <script>
-import modalEdit from '@/store/organisasi/modalEdit'
-import refreshView from '@/store/organisasi/viewOrganisasi'
+import modalEdit from '@/store/grup/modalEdit'
+import refreshView from '@/store/grup/viewGrup'
 
 export default {
   computed: {
@@ -61,7 +67,7 @@ export default {
     },
     editedItem: {
       get() {
-        return modalEdit.state.organisasi
+        return modalEdit.state.grup
       },
       set(value) {
         console.log(value)
@@ -71,24 +77,25 @@ export default {
 
   data: () => ({
     btnLoading: true,
-    org_foto: '',
+    grup_foto: '',
     urlImage: ''
   }),
 
   methods: {
     getIMG(value) {
-      return 'http://localhost:3000/upload/organisasiGambar/' + value
+      return 'http://localhost:3000/upload/grupGambar/' + value
     },
 
     async edit() {
       this.btnLoading = false
 
       const data = new FormData()
-      data.append('org_id', this.editedItem.org_id)
-      data.append('org_nama', this.editedItem.org_nama)
-      data.append('org_foto', this.org_foto)
+      data.append('grup_id', this.editedItem.grup_id)
+      data.append('grup_nama', this.editedItem.grup_nama)
+      data.append('grup_deskripsi', this.editedItem.grup_deskripsi)
+      data.append('grup_foto', this.grup_foto)
 
-      const url = process.env.VUE_APP_API_BASE + 'organisasi'
+      const url = process.env.VUE_APP_API_BASE + 'grup'
       this.http
         .put(url, data)
         .then(response => {
@@ -120,8 +127,8 @@ export default {
     },
 
     onFile(value) {
-      this.org_foto = value
-      this.urlImage = URL.createObjectURL(this.org_foto)
+      this.grup_foto = value
+      this.urlImage = URL.createObjectURL(this.grup_foto)
     },
 
     closeModal() {
