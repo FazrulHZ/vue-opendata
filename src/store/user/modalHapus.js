@@ -6,7 +6,7 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     state: {
         modalHapus: false,
-        grup: {
+        user: {
             user_id: '',
             user_nama: '',
             user_email: '',
@@ -22,7 +22,7 @@ export default new Vuex.Store({
             state.modalHapus = value
         },
         viewModal(state, value) {
-            state.grup = value
+            state.user = value
         }
     }
 })
