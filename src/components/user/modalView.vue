@@ -2,7 +2,7 @@
   <v-dialog v-model="modalView" max-width="50%">
     <v-card>
       <v-toolbar dark color="primary" dense flat>
-        <v-toolbar-title class="subtitle-1">Detail grup</v-toolbar-title>
+        <v-toolbar-title class="subtitle-1">Detail user</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-btn icon dark @click="closeModal()">
           <v-icon>mdi-close</v-icon>
@@ -11,23 +11,35 @@
 
       <v-form ref="form">
         <div class="px-5 py-5">
-          <!-- Nama Grup -->
-          <v-col cols="12" class="mb-n8">
-            <span class="subtitle-2">Nama Grup</span>
-            <v-text-field dense flat outlined class="mt-2" v-model="viewItem.grup_nama"></v-text-field>
-          </v-col>
+          <v-row>
+            <!-- Nama Lengkap -->
+            <v-col cols="12" class="mb-n10">
+              <span class="subtitle-2">Nama Lengkap</span>
+              <v-text-field dense flat outlined class="mt-2" v-model="viewItem.user_fullname" readonly></v-text-field>
+            </v-col>
+          </v-row>
 
-          <!-- Deskripsi Grup -->
-          <v-col cols="12" class="mb-n8">
-            <span class="subtitle-2">Deskripsi Grup</span>
-            <v-text-field dense flat outlined class="mt-2" v-model="viewItem.grup_deskripsi"></v-text-field>
-          </v-col>
+          <v-row>
+            <!-- Username -->
+            <v-col cols="4" class="mb-n10">
+              <span class="subtitle-2">Username</span>
+              <v-text-field dense flat outlined class="mt-2" v-model="viewItem.user_nama" readonly></v-text-field>
+            </v-col>
 
-          <!-- Preview -->
-          <v-col cols="12">
-            <span class="subtitle-2">Foto Grup</span>
-            <v-img :src="getIMG(viewItem.grup_foto)" max-width="200"></v-img>
-          </v-col>
+            <!-- Email -->
+            <v-col cols="8" class="mb-n10">
+              <span class="subtitle-2">Email</span>
+              <v-text-field dense flat outlined class="mt-2" v-model="viewItem.user_email" readonly></v-text-field>
+            </v-col>
+          </v-row>
+
+          <v-row>
+            <!-- Organisasi -->
+            <v-col cols="12">
+              <span class="subtitle-2">Organisasi</span>
+              <v-autocomplete v-model="viewItem.org_id" :items="refOrg" item-text="org_nama" item-value="org_id" outlined dense readonly> </v-autocomplete>
+            </v-col>
+          </v-row>
         </div>
       </v-form>
     </v-card>
@@ -35,7 +47,8 @@
 </template>
 
 <script>
-import modalView from '@/store/grup/modalView'
+import modalView from '@/store/user/modalView'
+import getRef from '@/helper/getRef.js'
 
 export default {
   computed: {
@@ -47,9 +60,10 @@ export default {
         modalView.commit('toggleModal', value)
       }
     },
+
     viewItem: {
       get() {
-        return modalView.state.grup
+        return modalView.state.user
       },
       set(value) {
         console.log(value)
@@ -57,13 +71,17 @@ export default {
     }
   },
 
-  data: () => ({}),
+  watch: {
+    async modalView() {
+      this.refOrg = await getRef.Organisasi()
+    }
+  },
+
+  data: () => ({
+    refOrg: []
+  }),
 
   methods: {
-    getIMG(value) {
-      return 'http://localhost:3000/upload/grupGambar/' + value
-    },
-
     closeModal() {
       this.modalView = false
     }

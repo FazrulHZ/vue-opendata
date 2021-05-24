@@ -14,13 +14,13 @@
           <!-- Nama Grup -->
           <v-col cols="12" class="mb-n8">
             <span class="subtitle-2">Nama Grup</span>
-            <v-text-field dense flat outlined class="mt-2" v-model="viewItem.grup_nama"></v-text-field>
+            <v-text-field dense flat outlined class="mt-2" v-model="viewItem.grup_nama" readonly></v-text-field>
           </v-col>
 
           <!-- Deskripsi Grup -->
           <v-col cols="12" class="mb-n8">
             <span class="subtitle-2">Deskripsi Grup</span>
-            <v-text-field dense flat outlined class="mt-2" v-model="viewItem.grup_deskripsi"></v-text-field>
+            <v-text-field dense flat outlined class="mt-2" v-model="viewItem.grup_deskripsi" readonly></v-text-field>
           </v-col>
 
           <!-- Preview -->

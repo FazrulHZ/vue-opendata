@@ -12,7 +12,8 @@ export default new Vuex.Store({
             user_email: '',
             user_fullname: '',
             org_id: '',
-            created_at: ''
+            created_at: '',
+            org_nama: ''
         }
     },
 

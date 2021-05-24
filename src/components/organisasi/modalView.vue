@@ -14,7 +14,7 @@
           <!-- Nama Organisasi -->
           <v-col cols="12" class="mb-n8">
             <span class="subtitle-2">Nama Organisasi</span>
-            <v-text-field dense flat outlined class="mt-2" v-model="viewItem.org_nama"></v-text-field>
+            <v-text-field dense flat outlined class="mt-2" v-model="viewItem.org_nama" readonly></v-text-field>
           </v-col>
 
           <!-- Preview -->
