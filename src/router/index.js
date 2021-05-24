@@ -93,10 +93,19 @@ const routes = [
         {
           path: '/admin/grup',
           component: () => import(
-            /* webpackChunkName: "adminOrganisasi" */
+            /* webpackChunkName: "adminGrup" */
             /* webpackPrefetch: true */
             /* webpackPreload: true */
             '../views/admin/Grup.vue'
+          )
+        },
+        {
+          path: '/admin/user',
+          component: () => import(
+            /* webpackChunkName: "adminUser" */
+            /* webpackPrefetch: true */
+            /* webpackPreload: true */
+            '../views/admin/User.vue'
           )
         }
       ]

@@ -37,6 +37,13 @@
         </v-list-item>
 
         <v-divider></v-divider>
+
+        <v-list-item :to="'/admin/user'">
+          <v-list-item-icon>
+            <v-icon>mdi-account</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title>User</v-list-item-title>
+        </v-list-item>
       </v-list-item-group>
     </v-list>
   </v-navigation-drawer>

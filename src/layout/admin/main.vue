@@ -25,7 +25,9 @@ export default {
   data: () => ({ drawer: null }),
 
   mounted() {
-    // this.$router.push('/admin/main')
+    if (this.$route.path === '/admin' || this.$route.path === '/admin/') {
+      this.$router.push('/admin/main')
+    }
   }
 }
 </script>
