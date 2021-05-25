@@ -100,6 +100,15 @@ const routes = [
           )
         },
         {
+          path: '/admin/dataset',
+          component: () => import(
+            /* webpackChunkName: "adminDataset" */
+            /* webpackPrefetch: true */
+            /* webpackPreload: true */
+            '../views/admin/Dataset.vue'
+          )
+        },
+        {
           path: '/admin/user',
           component: () => import(
             /* webpackChunkName: "adminUser" */

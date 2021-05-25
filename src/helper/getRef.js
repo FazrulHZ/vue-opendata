@@ -7,5 +7,11 @@ export default {
         const url = process.env.VUE_APP_API_BASE + 'organisasi'
         const response = await axios.get(url)
         return response.data.data
+    },
+
+    Grup: async (token) => {
+        const url = process.env.VUE_APP_API_BASE + 'grup'
+        const response = await axios.get(url)
+        return response.data.data
     }
 }

@@ -22,9 +22,16 @@
           <v-list-item-title>Home</v-list-item-title>
         </v-list-item>
 
+        <v-list-item :to="'/admin/dataset'">
+          <v-list-item-icon>
+            <v-icon>mdi-clipboard-file-outline</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title>Dataset</v-list-item-title>
+        </v-list-item>
+
         <v-list-item :to="'/admin/organisasi'">
           <v-list-item-icon>
-            <v-icon>mdi-office-building</v-icon>
+            <v-icon>mdi-office-building-outline</v-icon>
           </v-list-item-icon>
           <v-list-item-title>Organisasi</v-list-item-title>
         </v-list-item>
@@ -40,7 +47,7 @@
 
         <v-list-item :to="'/admin/user'">
           <v-list-item-icon>
-            <v-icon>mdi-account</v-icon>
+            <v-icon>mdi-account-outline</v-icon>
           </v-list-item-icon>
           <v-list-item-title>User</v-list-item-title>
         </v-list-item>
