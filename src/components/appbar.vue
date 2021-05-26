@@ -15,8 +15,8 @@
         <v-btn text dark @click="organisasi()">
           Organisasi
         </v-btn>
-        <v-btn text dark @click="topik()">
-          Topik
+        <v-btn text dark @click="grup()">
+          Grup
         </v-btn>
       </div>
     </v-app-bar>
@@ -42,8 +42,8 @@ export default {
       this.$router.push('/organisasi')
     },
 
-    topik() {
-      this.$router.push('/topik')
+    grup() {
+      this.$router.push('/grup')
     }
   }
 }

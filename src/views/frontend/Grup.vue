@@ -1,12 +1,12 @@
 <template>
   <div>
-    <h1>Topik</h1>
+    <h1>Grup</h1>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Topik',
+  name: 'Grup',
 
   data: () => ({})
 }

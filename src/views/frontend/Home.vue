@@ -8,7 +8,7 @@
       <v-col cols="12">
         <v-card class="px-5">
           <v-card-title>
-            Dataset Terbaru
+            DATASET TERBARU
           </v-card-title>
           <v-card-text v-for="item in datasets" :key="item.id">
             <v-card flat :to="'/listdataset/' + item.dataset_slug">
@@ -31,12 +31,6 @@
 
                 <div class="my-2">
                   {{ item.dataset_deskripsi }}
-                </div>
-
-                <div class="my-2 text-right">
-                  <v-chip color="primary" label small>
-                    {{ item.org_nama }}
-                  </v-chip>
                 </div>
                 <v-divider class="my-5"></v-divider>
               </div>
