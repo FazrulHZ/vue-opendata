@@ -21,7 +21,7 @@
       </v-toolbar>
 
       <v-form ref="form">
-        <div class="ml-5 mr-5 mt-5">
+        <div class="px-5 py-5">
           <v-row>
             <!-- Nama Dataset -->
             <v-col cols="12" class="mb-n10">

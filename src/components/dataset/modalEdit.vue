@@ -2,7 +2,7 @@
   <v-dialog v-model="modalEdit" max-width="50%">
     <v-card>
       <v-toolbar dark color="primary" dense flat>
-        <v-toolbar-title class="subtitle-1">Edit Data user</v-toolbar-title>
+        <v-toolbar-title class="subtitle-1">Edit Data dataset</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-btn icon dark @click="closeModal()">
           <v-icon>mdi-close</v-icon>
@@ -12,40 +12,42 @@
       <v-form ref="form">
         <div class="px-5 py-5">
           <v-row>
-            <!-- Nama Lengkap -->
+            <!-- Nama Dataset -->
             <v-col cols="12" class="mb-n10">
-              <span class="subtitle-2">Nama Lengkap</span>
-              <v-text-field dense flat outlined class="mt-2" v-model="editedItem.user_fullname"></v-text-field>
+              <span class="subtitle-2">Nama Dataset</span>
+              <v-text-field dense flat outlined class="mt-2" v-model="editedItem.dataset_nama"></v-text-field>
             </v-col>
           </v-row>
 
           <v-row>
-            <!-- Username -->
-            <v-col cols="4" class="mb-n10">
-              <span class="subtitle-2">Username</span>
-              <v-text-field dense flat outlined class="mt-2" v-model="editedItem.user_nama"></v-text-field>
-            </v-col>
-
-            <!-- Email -->
-            <v-col cols="8" class="mb-n10">
-              <span class="subtitle-2">Email</span>
-              <v-text-field dense flat outlined class="mt-2" v-model="editedItem.user_email"></v-text-field>
+            <!-- Sumber Dataset -->
+            <v-col cols="12" class="mb-n10">
+              <span class="subtitle-2">Sumber Dataset</span>
+              <v-text-field dense flat outlined class="mt-2" v-model="editedItem.dataset_sumber"></v-text-field>
             </v-col>
           </v-row>
 
           <v-row>
-            <!-- User Password -->
+            <!-- Cakupan Dataset -->
             <v-col cols="12" class="mb-n10">
-              <span class="subtitle-2">User Password</span>
-              <v-text-field dense flat outlined v-model="user_password" :append-icon="show ? 'mdi-eye' : 'mdi-eye-off'" :type="show ? 'text' : 'password'" class="mt-2 input-group--focused" @click:append="show = !show"></v-text-field>
+              <span class="subtitle-2">Cakupan Dataset</span>
+              <v-text-field dense flat outlined class="mt-2" v-model="editedItem.dataset_cakupan"></v-text-field>
             </v-col>
           </v-row>
 
           <v-row>
             <!-- Organisasi -->
-            <v-col cols="12">
+            <v-col cols="12" class="mb-n10">
               <span class="subtitle-2">Organisasi</span>
               <v-autocomplete v-model="editedItem.org_id" :items="refOrg" item-text="org_nama" item-value="org_id" outlined dense> </v-autocomplete>
+            </v-col>
+          </v-row>
+
+          <v-row>
+            <!-- Grup -->
+            <v-col cols="12">
+              <span class="subtitle-2">Grup</span>
+              <v-autocomplete v-model="editedItem.grup_id" :items="refGrup" item-text="grup_nama" item-value="grup_id" outlined dense> </v-autocomplete>
             </v-col>
           </v-row>
 
@@ -61,8 +63,8 @@
 </template>
 
 <script>
-import modalEdit from '@/store/user/modalEdit'
-import refreshView from '@/store/user/viewUser'
+import modalEdit from '@/store/dataset/modalEdit'
+import refreshView from '@/store/dataset/viewDataset'
 import getRef from '@/helper/getRef.js'
 
 export default {
@@ -77,7 +79,7 @@ export default {
     },
     editedItem: {
       get() {
-        return modalEdit.state.user
+        return modalEdit.state.dataset
       },
       set(value) {
         console.log(value)
@@ -88,6 +90,7 @@ export default {
   watch: {
     async modalEdit() {
       this.refOrg = await getRef.Organisasi()
+      this.refGrup = await getRef.Grup()
     }
   },
 
@@ -96,23 +99,23 @@ export default {
     show: false,
 
     refOrg: [],
-
-    user_password: ''
+    refGrup: []
   }),
 
   methods: {
     async edit() {
       this.btnLoading = false
 
-      const data = new FormData()
-      data.append('user_id', this.editedItem.user_id)
-      data.append('user_nama', this.editedItem.user_nama)
-      data.append('user_email', this.editedItem.user_email)
-      data.append('user_fullname', this.editedItem.user_fullname)
-      data.append('user_password', this.user_password)
-      data.append('org_id', this.editedItem.org_id)
+      const data = {
+        dataset_id: this.editedItem.dataset_id,
+        dataset_nama: this.editedItem.dataset_nama,
+        dataset_sumber: this.editedItem.dataset_sumber,
+        dataset_cakupan: this.editedItem.dataset_cakupan,
+        org_id: this.editedItem.org_id,
+        grup_id: this.editedItem.grup_id
+      }
 
-      const url = process.env.VUE_APP_API_BASE + 'users'
+      const url = process.env.VUE_APP_API_BASE + 'dataset'
       this.http
         .put(url, data)
         .then(response => {
@@ -144,8 +147,8 @@ export default {
     },
 
     onFile(value) {
-      this.user_foto = value
-      this.urlImage = URL.createObjectURL(this.user_foto)
+      this.dataset_foto = value
+      this.urlImage = URL.createObjectURL(this.dataset_foto)
     },
 
     closeModal() {
