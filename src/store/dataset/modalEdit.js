@@ -11,6 +11,7 @@ export default new Vuex.Store({
             dataset_nama: '',
             dataset_sumber: '',
             dataset_cakupan: '',
+            dataset_deskripsi: '',
             org_id: '',
             grup_id: '',
             created_at: ''

@@ -36,6 +36,14 @@
           </v-row>
 
           <v-row>
+            <!-- Deskripsi Dataset -->
+            <v-col cols="12" class="mb-n10">
+              <span class="subtitle-2">Deskripsi Dataset</span>
+              <v-text-field dense flat outlined class="mt-2" v-model="viewItem.dataset_deskripsi"></v-text-field>
+            </v-col>
+          </v-row>
+
+          <v-row>
             <!-- Organisasi -->
             <v-col cols="12" class="mb-n10">
               <span class="subtitle-2">Organisasi</span>
