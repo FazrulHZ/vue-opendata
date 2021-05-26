@@ -6,12 +6,13 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     state: {
         modalView: false,
-        grup: {
+        dataset: {
+            dataset_id: '',
+            dataset_nama: '',
+            dataset_sumber: '',
+            dataset_cakupan: '',
+            org_id: '',
             grup_id: '',
-            grup_nama: '',
-            grup_slug: '',
-            grup_foto: '',
-            grup_deskripsi: '',
             created_at: ''
         }
     },
@@ -21,7 +22,7 @@ export default new Vuex.Store({
             state.modalView = value
         },
         viewModal(state, value) {
-            state.grup = value
+            state.dataset = value
         }
     }
 })

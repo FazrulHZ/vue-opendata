@@ -2,7 +2,7 @@
   <v-dialog v-model="modalView" max-width="50%">
     <v-card>
       <v-toolbar dark color="primary" dense flat>
-        <v-toolbar-title class="subtitle-1">Detail user</v-toolbar-title>
+        <v-toolbar-title class="subtitle-1">Detail dataset</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-btn icon dark @click="closeModal()">
           <v-icon>mdi-close</v-icon>
@@ -12,32 +12,42 @@
       <v-form ref="form">
         <div class="px-5 py-5">
           <v-row>
-            <!-- Nama Lengkap -->
+            <!-- Nama Dataset -->
             <v-col cols="12" class="mb-n10">
-              <span class="subtitle-2">Nama Lengkap</span>
-              <v-text-field dense flat outlined class="mt-2" v-model="viewItem.user_fullname" readonly></v-text-field>
+              <span class="subtitle-2">Nama Dataset</span>
+              <v-text-field dense flat outlined class="mt-2" v-model="viewItem.dataset_nama" readonly></v-text-field>
             </v-col>
           </v-row>
 
           <v-row>
-            <!-- Username -->
-            <v-col cols="4" class="mb-n10">
-              <span class="subtitle-2">Username</span>
-              <v-text-field dense flat outlined class="mt-2" v-model="viewItem.user_nama" readonly></v-text-field>
+            <!-- Sumber Dataset -->
+            <v-col cols="12" class="mb-n10">
+              <span class="subtitle-2">Sumber Dataset</span>
+              <v-text-field dense flat outlined class="mt-2" v-model="viewItem.dataset_sumber" readonly></v-text-field>
             </v-col>
+          </v-row>
 
-            <!-- Email -->
-            <v-col cols="8" class="mb-n10">
-              <span class="subtitle-2">Email</span>
-              <v-text-field dense flat outlined class="mt-2" v-model="viewItem.user_email" readonly></v-text-field>
+          <v-row>
+            <!-- Cakupan Dataset -->
+            <v-col cols="12" class="mb-n10">
+              <span class="subtitle-2">Cakupan Dataset</span>
+              <v-text-field dense flat outlined class="mt-2" v-model="viewItem.dataset_cakupan" readonly></v-text-field>
             </v-col>
           </v-row>
 
           <v-row>
             <!-- Organisasi -->
-            <v-col cols="12">
+            <v-col cols="12" class="mb-n10">
               <span class="subtitle-2">Organisasi</span>
               <v-autocomplete v-model="viewItem.org_id" :items="refOrg" item-text="org_nama" item-value="org_id" outlined dense readonly> </v-autocomplete>
+            </v-col>
+          </v-row>
+
+          <v-row>
+            <!-- Grup -->
+            <v-col cols="12">
+              <span class="subtitle-2">Grup</span>
+              <v-autocomplete v-model="viewItem.grup_id" :items="refGrup" item-text="grup_nama" item-value="grup_id" outlined dense readonly> </v-autocomplete>
             </v-col>
           </v-row>
         </div>
@@ -47,7 +57,7 @@
 </template>
 
 <script>
-import modalView from '@/store/user/modalView'
+import modalView from '@/store/dataset/modalView'
 import getRef from '@/helper/getRef.js'
 
 export default {
@@ -63,7 +73,7 @@ export default {
 
     viewItem: {
       get() {
-        return modalView.state.user
+        return modalView.state.dataset
       },
       set(value) {
         console.log(value)
@@ -74,11 +84,13 @@ export default {
   watch: {
     async modalView() {
       this.refOrg = await getRef.Organisasi()
+      this.refGrup = await getRef.Grup()
     }
   },
 
   data: () => ({
-    refOrg: []
+    refOrg: [],
+    refGrup: []
   }),
 
   methods: {
