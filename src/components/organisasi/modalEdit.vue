@@ -17,6 +17,12 @@
             <v-text-field dense flat outlined class="mt-2" v-model="editedItem.org_nama"></v-text-field>
           </v-col>
 
+          <!-- Detail Organisasi -->
+          <v-col cols="12" class="mb-n8">
+            <span class="subtitle-2">Detail Organisasi</span>
+            <textarea dense flat outlined class="mt-2" v-model="editedItem.org_ket"></textarea>
+          </v-col>
+
           <!-- Preview -->
           <v-col cols="12">
             <span class="subtitle-2">Foto Organisasi</span>
@@ -86,6 +92,7 @@ export default {
       const data = new FormData()
       data.append('org_id', this.editedItem.org_id)
       data.append('org_nama', this.editedItem.org_nama)
+      data.append('org_ket', this.editedItem.org_ket)
       data.append('org_foto', this.org_foto)
 
       const url = process.env.VUE_APP_API_BASE + 'organisasi'

@@ -17,7 +17,7 @@
         <v-card to="/readmore" class="mt-5">
           <v-row no-gutters class="py-5">
             <v-col cols="2" class="my-auto text-center">
-              <v-icon size="65" :color="iconColor">mdi-file-document-outline</v-icon>
+              <v-icon size="65" color="primary">mdi-file-document-outline</v-icon>
             </v-col>
             <v-col cols="10">
               <div class="font-weight-black primary--text">
@@ -37,7 +37,6 @@ import datasetCard from '@/components/datasetCard'
 export default {
   components: {
     datasetCard
-  },
-  data: () => ({})
+  }
 }
 </script>

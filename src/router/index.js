@@ -47,11 +47,11 @@ const routes = [
           component: Grup
         },
         {
-          path: '/listdataset',
+          path: '/listdataset/:slug',
           component: listDataset
         },
         {
-          path: '/readmore',
+          path: '/readmore/:slug',
           component: readmoreDataset
         }
       ]

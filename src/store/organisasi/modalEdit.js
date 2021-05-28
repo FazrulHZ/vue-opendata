@@ -10,6 +10,7 @@ export default new Vuex.Store({
             org_id: '',
             org_nama: '',
             org_slug: '',
+            org_ket: '',
             org_foto: '',
             created_at: ''
         }

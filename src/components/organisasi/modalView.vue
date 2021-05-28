@@ -17,6 +17,12 @@
             <v-text-field dense flat outlined class="mt-2" v-model="viewItem.org_nama" readonly></v-text-field>
           </v-col>
 
+          <!-- Detail Organisasi -->
+          <v-col cols="12" class="mb-n8">
+            <span class="subtitle-2">Detail Organisasi</span>
+            <textarea dense flat outlined class="mt-2" v-model="viewItem.org_ket" readonly></textarea>
+          </v-col>
+
           <!-- Preview -->
           <v-col cols="12">
             <span class="subtitle-2">Foto Organisasi</span>
