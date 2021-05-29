@@ -14,7 +14,7 @@
       <v-card v-for="item in datasets" :key="item.id" :to="'/readmore/' + item.dataset_slug" class="mb-10">
         <v-row no-gutters class="pa-5">
           <v-col cols="2" md="1" class="my-auto">
-            <v-icon size="65" :color="iconColor">mdi-file-document-outline</v-icon>
+            <v-icon size="65">mdi-file-document-outline</v-icon>
           </v-col>
           <v-col cols="10" md="11">
             <div class="font-weight-black primary--text">

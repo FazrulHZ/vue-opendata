@@ -50,10 +50,10 @@
 </template>
 
 <script>
-import CModalAdd from '@/components/user/modalAdd'
-import CModalEdit from '@/components/user/modalEdit'
-import CModalDelete from '@/components/user/modalDelete'
-import CModalView from '@/components/user/modalView'
+import CModalAdd from '@/components/admin/user/modalAdd'
+import CModalEdit from '@/components/admin/user/modalEdit'
+import CModalDelete from '@/components/admin/user/modalDelete'
+import CModalView from '@/components/admin/user/modalView'
 
 import modalView from '@/store/user/modalView'
 import modalEdit from '@/store/user/modalEdit'

@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import CBaner from '@/components/baner'
+import CBaner from '@/components/frontend/baner'
 export default {
   components: {
     CBaner

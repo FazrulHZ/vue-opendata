@@ -13,7 +13,7 @@
     <div>
       <v-row>
         <v-col cols="12" md="3" v-for="item in organisasis" :key="item.id">
-          <v-card class="pa-4" :to="'/readmore/' + item.org_slug">
+          <v-card class="pa-4" :to="'/organisasi/' + item.org_slug">
             <v-row no-gutters>
               <v-col cols="3" class="my-auto">
                 <v-icon size="50" color="primary">mdi-office-building-outline</v-icon>

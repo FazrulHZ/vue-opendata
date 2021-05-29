@@ -50,10 +50,10 @@
 </template>
 
 <script>
-import CModalAdd from '@/components/dataset/modalAdd'
-import CModalEdit from '@/components/dataset/modalEdit'
-import CModalDelete from '@/components/dataset/modalDelete'
-import CModalView from '@/components/dataset/modalView'
+import CModalAdd from '@/components/admin/dataset/modalAdd'
+import CModalEdit from '@/components/admin/dataset/modalEdit'
+import CModalDelete from '@/components/admin/dataset/modalDelete'
+import CModalView from '@/components/admin/dataset/modalView'
 
 import modalView from '@/store/dataset/modalView'
 import modalEdit from '@/store/dataset/modalEdit'

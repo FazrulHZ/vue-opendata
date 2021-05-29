@@ -6,7 +6,8 @@ import SubMain from '../layout/frontend/submain.vue'
 
 import Home from '../views/frontend/Home.vue'
 import Data from '../views/frontend/Data.vue'
-import Organisasi from '../views/frontend/Organisasi.vue'
+import Organisasi from '../views/frontend/organisasi/Organisasi.vue'
+import orgDetail from '../views/frontend/organisasi/orgDetail.vue'
 import Grup from '../views/frontend/Grup.vue'
 
 import listDataset from '../views/frontend/dataset/listdata.vue'
@@ -41,6 +42,10 @@ const routes = [
         {
           path: '/organisasi',
           component: Organisasi
+        },
+        {
+          path: '/organisasi/:slug',
+          component: orgDetail
         },
         {
           path: '/grup',

@@ -43,7 +43,7 @@
 </template>
 
 <script>
-import GroupData from '@/components/groupdata'
+import GroupData from '@/components/frontend/groupdata'
 
 export default {
   name: 'Home',

@@ -83,7 +83,11 @@ export default {
 
   methods: {
     getIMG(value) {
-      return 'http://localhost:3000/upload/grupGambar/' + value
+      if (value) {
+        return 'http://localhost:3000/upload/grupGambar/' + value
+      } else {
+        return 'http://localhost:3000/upload/default.svg'
+      }
     },
 
     async edit() {

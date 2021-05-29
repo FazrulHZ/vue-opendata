@@ -10,7 +10,7 @@
 </template>
 
 <script>
-import CAppBar from '@/components/appbar'
+import CAppBar from '@/components/frontend/appbar'
 export default {
   components: {
     CAppBar

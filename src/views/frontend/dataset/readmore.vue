@@ -84,7 +84,7 @@
 </template>
 
 <script>
-import datasetCard from '@/components/datasetCard'
+import datasetCard from '@/components/frontend/datasetCard'
 export default {
   components: {
     datasetCard

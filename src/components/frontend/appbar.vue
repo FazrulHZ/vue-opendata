@@ -31,19 +31,19 @@ export default {
 
   methods: {
     home() {
-      this.$router.push('/')
+      this.$router.push('/').catch(() => {})
     },
 
     data() {
-      this.$router.push('/data')
+      this.$router.push('/data').catch(() => {})
     },
 
     organisasi() {
-      this.$router.push('/organisasi')
+      this.$router.push('/organisasi').catch(() => {})
     },
 
     grup() {
-      this.$router.push('/grup')
+      this.$router.push('/grup').catch(() => {})
     }
   }
 }
