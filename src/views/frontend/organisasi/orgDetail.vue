@@ -33,7 +33,7 @@
 </template>
 
 <script>
-import datasetCard from '@/components/frontend/datasetCard'
+import datasetCard from '@/components/frontend/organisasi/datasetCard'
 export default {
   components: {
     datasetCard

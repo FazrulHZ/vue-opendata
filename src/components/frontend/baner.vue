@@ -23,6 +23,7 @@
         </v-btn>
       </div>
     </v-app-bar>
+
     <div>
       <v-img src="@/assets/img/baner-black.jpg" class="ma-0 pa-0 d-flex align-center">
         <div class="white--text mx-12 my-12">
@@ -46,16 +47,22 @@ export default {
   data: () => ({
     topHeader: true,
     bg: 'transparent',
+    dekstop: true,
     mxW: 250,
     appH: 90
   }),
 
   created() {
     window.addEventListener('scroll', this.handleScroll)
+    if (this.$vuetify.breakpoint.name === 'xs' || this.$vuetify.breakpoint.name === 'sm') {
+      this.dekstop = false
+    }
   },
+
   destroyed() {
     window.removeEventListener('scroll', this.handleScroll)
   },
+
   methods: {
     handleScroll(event) {
       // Any code to be executed when the window is scrolled

@@ -8,6 +8,7 @@
       <v-col cols="12">
         <v-card class="px-5">
           <v-card-title>
+            <v-icon class="mr-2">mdi-newspaper-variant-outline</v-icon>
             DATASET TERBARU
           </v-card-title>
           <v-card-text v-for="item in datasets" :key="item.id">
@@ -32,7 +33,7 @@
                 <div class="my-2">
                   {{ item.dataset_deskripsi }}
                 </div>
-                <v-divider class="my-5"></v-divider>
+                <v-divider class="mt-5"></v-divider>
               </div>
             </v-card>
           </v-card-text>
