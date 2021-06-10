@@ -1,5 +1,7 @@
+/* eslint-disable space-before-function-paren */
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import Cookie from '@/helper/cookie.js'
 
 import Main from '../layout/frontend/main.vue'
 import SubMain from '../layout/frontend/submain.vue'
@@ -85,6 +87,16 @@ const routes = [
       ]
   },
 
+  {
+    path: '/login',
+    component: () => import(
+      /* webpackChunkName: "Login" */
+      /* webpackPrefetch: true */
+      /* webpackPreload: true */
+      '../views/frontend/Login.vue'
+    )
+  },
+
   // Admin
   {
     path: '/admin',
@@ -95,8 +107,8 @@ const routes = [
       '../layout/admin/main.vue'
     ),
     meta: {
-      title: 'Admin'
-      // requiresAuth: true
+      title: 'Admin',
+      requiresAuth: true
     },
     children:
       [
@@ -153,6 +165,22 @@ const router = new VueRouter({
   mode: 'history',
   base: process.env.BASE_URL,
   routes
+})
+
+router.beforeEach(async (to, from, next) => {
+  var myCookie = Cookie.get('token')
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (!myCookie) {
+      next({
+        path: '/login',
+        params: { nextUrl: to.fullPath }
+      })
+    } else {
+      next()
+    }
+  } else {
+    next()
+  }
 })
 
 export default router

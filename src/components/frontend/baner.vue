@@ -21,6 +21,10 @@
         <v-btn text dark @click="grup()">
           Grup
         </v-btn>
+        <v-btn text dark @click="login()">
+          <v-icon small class="mr-2">mdi-lock</v-icon>
+          Login
+        </v-btn>
       </div>
     </v-app-bar>
 
@@ -93,6 +97,10 @@ export default {
 
     grup() {
       this.$router.push('/grup').catch(() => {})
+    },
+
+    login() {
+      this.$router.push('/login').catch(() => {})
     }
   }
 }
