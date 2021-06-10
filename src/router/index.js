@@ -5,13 +5,6 @@ import Main from '../layout/frontend/main.vue'
 import SubMain from '../layout/frontend/submain.vue'
 
 import Home from '../views/frontend/Home.vue'
-import Data from '../views/frontend/Data.vue'
-import Organisasi from '../views/frontend/organisasi/Organisasi.vue'
-import orgDetail from '../views/frontend/organisasi/orgDetail.vue'
-import Grup from '../views/frontend/Grup.vue'
-
-import listDataset from '../views/frontend/dataset/listdata.vue'
-import readmoreDataset from '../views/frontend/dataset/readmore.vue'
 
 Vue.use(VueRouter)
 
@@ -37,27 +30,57 @@ const routes = [
       [
         {
           path: '/data',
-          component: Data
+          component: () => import(
+            /* webpackChunkName: "Data" */
+            /* webpackPrefetch: true */
+            /* webpackPreload: true */
+            '../views/frontend/Data.vue'
+          )
         },
         {
           path: '/organisasi',
-          component: Organisasi
+          component: () => import(
+            /* webpackChunkName: "Organisasi" */
+            /* webpackPrefetch: true */
+            /* webpackPreload: true */
+            '../views/frontend/organisasi/Organisasi.vue'
+          )
         },
         {
           path: '/organisasi/:slug',
-          component: orgDetail
+          component: () => import(
+            /* webpackChunkName: "Organisasi Detail" */
+            /* webpackPrefetch: true */
+            /* webpackPreload: true */
+            '../views/frontend/organisasi/orgDetail.vue'
+          )
         },
         {
           path: '/grup',
-          component: Grup
+          component: () => import(
+            /* webpackChunkName: "Grup" */
+            /* webpackPrefetch: true */
+            /* webpackPreload: true */
+            '../views/frontend/Grup.vue'
+          )
         },
         {
           path: '/listdataset/:slug',
-          component: listDataset
+          component: () => import(
+            /* webpackChunkName: "List Dataset" */
+            /* webpackPrefetch: true */
+            /* webpackPreload: true */
+            '../views/frontend/dataset/listdata.vue'
+          )
         },
         {
           path: '/readmore/:slug',
-          component: readmoreDataset
+          component: () => import(
+            /* webpackChunkName: "Readmore Dataset" */
+            /* webpackPrefetch: true */
+            /* webpackPreload: true */
+            '../views/frontend/dataset/readmore.vue'
+          )
         }
       ]
   },
