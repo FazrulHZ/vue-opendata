@@ -31,7 +31,7 @@
           <!-- Detail Organisasi -->
           <v-col cols="12" class="mb-n8">
             <span class="subtitle-2">Detail Organisasi</span>
-            <textarea dense flat outlined class="mt-2" v-model="org_ket"></textarea>
+            <v-textarea dense flat outlined class="mt-2" v-model="org_ket"></v-textarea>
           </v-col>
 
           <!-- Foto -->
@@ -62,6 +62,7 @@ export default {
   data: () => ({
     ModalAdd: false,
     btnLoading: true,
+
     org_nama: '',
     org_ket: '',
     org_foto: '',
@@ -111,7 +112,6 @@ export default {
     onFile(value) {
       this.org_foto = value
       this.urlImage = URL.createObjectURL(this.org_foto)
-      console.log(value)
     },
 
     closeModal() {

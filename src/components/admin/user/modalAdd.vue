@@ -53,15 +53,38 @@
           </v-row>
 
           <v-row>
+            <!-- Usel Level -->
+            <v-col cols="12" class="mb-n8">
+              <span class="subtitle-2">Usel Level</span>
+              <v-select v-model="user_lvl" :items="refLevel" item-text="nama" item-value="id" outlined dense> </v-select>
+            </v-col>
+          </v-row>
+
+          <v-row>
             <!-- Organisasi -->
-            <v-col cols="12">
+            <v-col cols="12" class="mb-n8">
               <span class="subtitle-2">Organisasi</span>
               <v-autocomplete v-model="org_id" :items="refOrg" item-text="org_nama" item-value="org_id" outlined dense> </v-autocomplete>
             </v-col>
           </v-row>
 
+          <v-row>
+            <!-- Foto -->
+            <v-col cols="12" class="mb-n8">
+              <span class="subtitle-2">Foto</span>
+              <v-file-input dense flat outlined prepend-icon accept="image/png, image/jpeg, image/bmp" placeholder="Pilih Foto" append-icon="mdi-camera" @change="onFile" ref="avatar"></v-file-input>
+            </v-col>
+          </v-row>
+
+          <v-row>
+            <!-- Preview -->
+            <v-col cols="12" class="mb-5">
+              <v-img :src="urlImage" max-width="200"></v-img>
+            </v-col>
+          </v-row>
+
           <hr />
-          <div class="text-right mr-5 mt-5 pb-5">
+          <div class="text-right mt-5 pb-5">
             <v-btn v-if="btnLoading" small color="primary" depressed @click="add()">SIMPAN</v-btn>
             <v-btn v-else small color="primary" depressed loading>SIMPAN</v-btn>
           </div>
@@ -82,12 +105,26 @@ export default {
     show: false,
 
     refOrg: [],
+    refLevel: [
+      {
+        id: 'superadmin',
+        nama: 'Super Admin'
+      },
+
+      {
+        id: 'admin',
+        nama: 'Admin'
+      }
+    ],
 
     user_nama: '',
     user_email: '',
     user_fullname: '',
+    user_lvl: '',
     user_password: '',
-    org_id: ''
+    user_foto: '',
+    org_id: '',
+    urlImage: ''
   }),
 
   methods: {
@@ -108,6 +145,8 @@ export default {
       data.append('user_email', this.user_email)
       data.append('user_fullname', this.user_fullname)
       data.append('user_password', this.user_password)
+      data.append('user_lvl', this.user_lvl)
+      data.append('user_foto', this.user_foto)
       data.append('org_id', this.org_id)
 
       const url = process.env.VUE_APP_API_BASE + 'users'
@@ -138,13 +177,13 @@ export default {
           refreshView.commit('success', error.response.data.success)
           console.log(error.response.status)
           this.btnLoading = true
+          this.closeModal()
         })
     },
 
     onFile(value) {
-      this.user_email = value
-      this.urlImage = URL.createObjectURL(this.user_email)
-      console.log(value)
+      this.user_foto = value
+      this.urlImage = URL.createObjectURL(this.user_foto)
     }
   }
 }

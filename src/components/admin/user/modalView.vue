@@ -12,10 +12,19 @@
       <v-form ref="form">
         <div class="px-5 py-5">
           <v-row>
+            <!-- Foto user -->
+            <v-col cols="12" class="text-center mb-n5">
+              <v-avatar size="200">
+                <v-img :src="getIMG(viewItem.user_foto)"></v-img>
+              </v-avatar>
+            </v-col>
+          </v-row>
+
+          <v-row>
             <!-- Nama Lengkap -->
             <v-col cols="12" class="mb-n10">
               <span class="subtitle-2">Nama Lengkap</span>
-              <v-text-field dense flat outlined class="mt-2" v-model="viewItem.user_fullname" readonly></v-text-field>
+              <v-text-field v-model="viewItem.user_fullname" dense flat outlined class="mt-2" readonly></v-text-field>
             </v-col>
           </v-row>
 
@@ -23,13 +32,21 @@
             <!-- Username -->
             <v-col cols="4" class="mb-n10">
               <span class="subtitle-2">Username</span>
-              <v-text-field dense flat outlined class="mt-2" v-model="viewItem.user_nama" readonly></v-text-field>
+              <v-text-field v-model="viewItem.user_nama" dense flat outlined class="mt-2" readonly></v-text-field>
             </v-col>
 
             <!-- Email -->
             <v-col cols="8" class="mb-n10">
               <span class="subtitle-2">Email</span>
-              <v-text-field dense flat outlined class="mt-2" v-model="viewItem.user_email" readonly></v-text-field>
+              <v-text-field v-model="viewItem.user_email" dense flat outlined class="mt-2" readonly></v-text-field>
+            </v-col>
+          </v-row>
+
+          <v-row>
+            <!-- Usel Level -->
+            <v-col cols="12" class="mb-n8">
+              <span class="subtitle-2">Usel Level</span>
+              <v-select v-model="viewItem.user_lvl" :items="refLevel" item-text="nama" item-value="id" outlined dense readonly> </v-select>
             </v-col>
           </v-row>
 
@@ -37,7 +54,7 @@
             <!-- Organisasi -->
             <v-col cols="12">
               <span class="subtitle-2">Organisasi</span>
-              <v-autocomplete v-model="viewItem.org_id" :items="refOrg" item-text="org_nama" item-value="org_id" outlined dense readonly> </v-autocomplete>
+              <v-text-field v-model="viewItem.org_nama" outlined dense readonly> </v-text-field>
             </v-col>
           </v-row>
         </div>
@@ -78,10 +95,29 @@ export default {
   },
 
   data: () => ({
-    refOrg: []
+    refOrg: [],
+    refLevel: [
+      {
+        id: 'superadmin',
+        nama: 'Super Admin'
+      },
+
+      {
+        id: 'admin',
+        nama: 'Admin'
+      }
+    ]
   }),
 
   methods: {
+    getIMG(value) {
+      if (value) {
+        return process.env.VUE_APP_API_BASE + 'upload/userGambar/' + value
+      } else {
+        return process.env.VUE_APP_API_BASE + 'upload/userGambar/default.png'
+      }
+    },
+
     closeModal() {
       this.modalView = false
     }

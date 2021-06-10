@@ -29,9 +29,9 @@
         {{
           datasets
             .map(function(x) {
-              return x.org_id
+              return x.dataset_id
             })
-            .indexOf(item.org_id) + 1
+            .indexOf(item.dataset_id) + 1
         }}
       </template>
       <template v-slot:[`item.action`]="{ item }">

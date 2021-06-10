@@ -11,6 +11,8 @@ export default new Vuex.Store({
             user_nama: '',
             user_email: '',
             user_fullname: '',
+            user_lvl: '',
+            user_foto: '',
             org_id: '',
             created_at: '',
             org_nama: ''
