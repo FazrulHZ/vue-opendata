@@ -9,16 +9,24 @@
         <v-btn text dark @click="home()">
           Home
         </v-btn>
+
         <v-btn text dark @click="data()">
           Data
         </v-btn>
+
         <v-btn text dark @click="organisasi()">
           Organisasi
         </v-btn>
+
         <v-btn text dark @click="grup()">
           Grup
         </v-btn>
-        <v-btn text dark @click="login()">
+
+        <v-btn v-if="session.session_ok" text dark @click="dashboard()">
+          Dashboard
+        </v-btn>
+
+        <v-btn v-else text dark @click="login()">
           <v-icon small class="mr-2">mdi-lock</v-icon>
           Login
         </v-btn>
@@ -28,10 +36,18 @@
 </template>
 
 <script>
+import Cookie from '@/helper/cookie.js'
+
 export default {
   name: 'baner',
 
-  data: () => ({}),
+  data: () => ({
+    session: ''
+  }),
+
+  async mounted() {
+    this.session = await JSON.parse(Cookie.dec(Cookie.get('myCookie')))
+  },
 
   methods: {
     home() {
@@ -52,6 +68,10 @@ export default {
 
     login() {
       this.$router.push('/login').catch(() => {})
+    },
+
+    dashboard() {
+      this.$router.push('/admin').catch(() => {})
     }
   }
 }

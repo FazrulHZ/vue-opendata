@@ -2,7 +2,7 @@
   <div>
     <h1>Grup</h1>
 
-    {{ dec.user_fullname }}
+    {{ session }}
   </div>
 </template>
 
@@ -13,14 +13,11 @@ export default {
   name: 'Grup',
 
   data: () => ({
-    session: {},
-    dec: {},
-    cookie: ''
+    session: {}
   }),
 
   async mounted() {
-    this.session = await JSON.parse(Cookie.get('myCookie'))
-    this.dec = await JSON.parse(Cookie.dec(Cookie.get('enc')))
+    this.session = await JSON.parse(Cookie.dec(Cookie.get('myCookie')))
   }
 }
 </script>

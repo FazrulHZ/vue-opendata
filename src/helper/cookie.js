@@ -54,12 +54,12 @@ export default {
     },
 
     enc: (value) => {
-        const enc = CryptoJS.AES.encrypt(JSON.stringify(value), '531414009').toString();
+        const enc = CryptoJS.AES.encrypt(JSON.stringify(value), process.env.VUE_APP_TOPSECRET).toString();
         return enc
     },
 
     dec: (value) => {
-        var bytes = CryptoJS.AES.decrypt(value, '531414009');
+        var bytes = CryptoJS.AES.decrypt(value, process.env.VUE_APP_TOPSECRET);
         var decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
         return decryptedData
     }

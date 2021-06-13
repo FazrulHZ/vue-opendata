@@ -98,7 +98,7 @@ export default {
               )
             )
             this.alertGagal = false
-            this.$router.push('/')
+            this.$router.push('/admin')
             this.loadingButton = true
           }
         } catch (error) {

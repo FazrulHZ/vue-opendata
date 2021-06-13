@@ -50,6 +50,8 @@
 </template>
 
 <script>
+import Cookie from '@/helper/cookie.js'
+
 import CModalAdd from '@/components/admin/user/modalAdd'
 import CModalEdit from '@/components/admin/user/modalEdit'
 import CModalDelete from '@/components/admin/user/modalDelete'
@@ -74,11 +76,13 @@ export default {
         return refreshView.state.Refresh
       }
     },
+
     alertMassage: {
       get() {
         return refreshView.state.alertMassage
       }
     },
+
     success: {
       get() {
         return refreshView.state.success
@@ -87,6 +91,7 @@ export default {
         refreshView.commit('alert', value)
       }
     },
+
     alertBerhasil: {
       get() {
         return refreshView.state.alertBerhasil
@@ -95,6 +100,7 @@ export default {
         refreshView.commit('berhasilAlert', value)
       }
     },
+
     alertGagal: {
       get() {
         return refreshView.state.alertGagal
@@ -116,6 +122,7 @@ export default {
   },
 
   data: () => ({
+    session: '',
     users: [],
     user: {},
 
@@ -133,14 +140,19 @@ export default {
     ]
   }),
 
-  mounted() {
+  async mounted() {
+    this.session = await JSON.parse(Cookie.dec(Cookie.get('myCookie')))
     this.getData()
   },
 
   methods: {
     getData() {
       this.http
-        .get(process.env.VUE_APP_API_BASE + 'users')
+        .get(process.env.VUE_APP_API_BASE + 'users', {
+          headers: {
+            Authorization: 'Bearer ' + this.session.token
+          }
+        })
         .then(res => {
           refreshView.commit('refreshData', false)
           this.users = res.data.data
