@@ -168,7 +168,7 @@ const router = new VueRouter({
 })
 
 router.beforeEach(async (to, from, next) => {
-  var myCookie = Cookie.get('token')
+  var myCookie = Cookie.get('myCookie')
   if (to.matched.some(record => record.meta.requiresAuth)) {
     if (!myCookie) {
       next({

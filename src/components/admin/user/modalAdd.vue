@@ -95,11 +95,14 @@
 </template>
 
 <script>
+import Cookie from '@/helper/cookie.js'
+
 import refreshView from '@/store/user/viewUser'
 import getRef from '@/helper/getRef.js'
 
 export default {
   data: () => ({
+    session: '',
     ModalAdd: false,
     btnLoading: true,
     show: false,
@@ -128,12 +131,25 @@ export default {
   }),
 
   methods: {
+    default() {
+      this.user_nama = ''
+      this.user_email = ''
+      this.user_fullname = ''
+      this.user_lvl = ''
+      this.user_password = ''
+      this.user_foto = ''
+      this.org_id = ''
+      this.urlImage = ''
+    },
+
     async openModal() {
+      this.session = await JSON.parse(Cookie.dec(Cookie.get('myCookie')))
       this.refOrg = await getRef.Organisasi()
       this.ModalAdd = true
     },
 
     closeModal() {
+      this.default()
       this.ModalAdd = false
     },
 
@@ -151,7 +167,11 @@ export default {
 
       const url = process.env.VUE_APP_API_BASE + 'users'
       this.http
-        .post(url, data)
+        .post(url, data, {
+          headers: {
+            Authorization: 'Bearer ' + this.session.token
+          }
+        })
         .then(response => {
           this.btnLoading = true
           if (response.data.success) {
@@ -167,6 +187,7 @@ export default {
             refreshView.commit('berhasilAlert', false)
             refreshView.commit('success', response.data.success)
           }
+          this.default()
           this.closeModal()
         })
         .catch(error => {
@@ -177,6 +198,7 @@ export default {
           refreshView.commit('success', error.response.data.success)
           console.log(error.response.status)
           this.btnLoading = true
+          this.default()
           this.closeModal()
         })
     },

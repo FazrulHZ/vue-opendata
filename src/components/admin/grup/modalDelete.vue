@@ -2,7 +2,7 @@
   <v-dialog v-model="modalHapus" max-width="50%">
     <v-card>
       <v-toolbar dark color="primary" dense flat>
-        <v-toolbar-title class="subtitle-1">Hapus Data grup</v-toolbar-title>
+        <v-toolbar-title class="subtitle-1">Hapus Data Grup</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-btn icon dark @click="closeModal()">
           <v-icon>mdi-close</v-icon>
@@ -32,6 +32,8 @@
 </template>
 
 <script>
+import Cookie from '@/helper/cookie.js'
+
 import modalHapus from '@/store/grup/modalHapus'
 import refreshView from '@/store/grup/viewGrup'
 
@@ -55,10 +57,15 @@ export default {
     }
   },
 
+  watch: {
+    async modalHapus() {
+      this.session = await JSON.parse(Cookie.dec(Cookie.get('myCookie')))
+    }
+  },
+
   data: () => ({
-    btnLoading: true,
-    org_foto: '',
-    urlImage: ''
+    session: '',
+    btnLoading: true
   }),
 
   methods: {
@@ -67,7 +74,11 @@ export default {
 
       const url = process.env.VUE_APP_API_BASE + 'grup/' + this.hapusItem.grup_id
       this.http
-        .delete(url)
+        .delete(url, {
+          headers: {
+            Authorization: 'Bearer ' + this.session.token
+          }
+        })
         .then(response => {
           this.btnLoading = true
           if (response.data.success) {

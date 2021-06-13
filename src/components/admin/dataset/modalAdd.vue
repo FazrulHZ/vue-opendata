@@ -82,14 +82,16 @@
 </template>
 
 <script>
+import Cookie from '@/helper/cookie.js'
+
 import refreshView from '@/store/dataset/viewDataset'
 import getRef from '@/helper/getRef.js'
 
 export default {
   data: () => ({
+    session: '',
     ModalAdd: false,
     btnLoading: true,
-    show: false,
 
     refOrg: [],
     refGrup: [],
@@ -103,13 +105,24 @@ export default {
   }),
 
   methods: {
+    default() {
+      this.dataset_nama = ''
+      this.dataset_sumber = ''
+      this.dataset_cakupan = ''
+      this.dataset_deskripsi = ''
+      this.org_id = ''
+      this.grup_id = ''
+    },
+
     async openModal() {
+      this.session = await JSON.parse(Cookie.dec(Cookie.get('myCookie')))
       this.refOrg = await getRef.Organisasi()
       this.refGrup = await getRef.Grup()
       this.ModalAdd = true
     },
 
     closeModal() {
+      this.default()
       this.ModalAdd = false
     },
 
@@ -127,7 +140,11 @@ export default {
 
       const url = process.env.VUE_APP_API_BASE + 'dataset'
       this.http
-        .post(url, data)
+        .post(url, data, {
+          headers: {
+            Authorization: 'Bearer ' + this.session.token
+          }
+        })
         .then(response => {
           this.btnLoading = true
           if (response.data.success) {
@@ -143,6 +160,7 @@ export default {
             refreshView.commit('berhasilAlert', false)
             refreshView.commit('success', response.data.success)
           }
+          this.default()
           this.closeModal()
         })
         .catch(error => {
@@ -152,6 +170,7 @@ export default {
           refreshView.commit('berhasilAlert', false)
           refreshView.commit('success', error.response.data.success)
           console.log(error.response.status)
+          this.default()
           this.btnLoading = true
         })
     },
@@ -159,7 +178,6 @@ export default {
     onFile(value) {
       this.dataset_email = value
       this.urlImage = URL.createObjectURL(this.dataset_email)
-      console.log(value)
     }
   }
 }

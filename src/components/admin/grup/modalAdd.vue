@@ -3,7 +3,7 @@
     <template v-slot:activator="{ on: modal, attrs }">
       <v-tooltip bottom>
         <template v-slot:activator="{ on: tooltip }">
-          <v-btn small fab text v-bind="attrs" v-on="{ ...tooltip, ...modal }">
+          <v-btn small fab text v-bind="attrs" v-on="{ ...tooltip, ...modal }" @click="openModal()">
             <v-icon>mdi-plus-box</v-icon>
           </v-btn>
         </template>
@@ -15,7 +15,7 @@
       <v-toolbar dark color="primary" dense flat>
         <v-toolbar-title class="subtitle-1">Tambah Grup</v-toolbar-title>
         <v-spacer></v-spacer>
-        <v-btn icon dark @click="ModalAdd = false">
+        <v-btn icon dark @click="closeModal()">
           <v-icon>mdi-close</v-icon>
         </v-btn>
       </v-toolbar>
@@ -31,7 +31,7 @@
           <!-- Deskripsi Grup -->
           <v-col cols="12" class="mb-n8">
             <span class="subtitle-2">Deskripsi Grup</span>
-            <v-text-field dense flat outlined class="mt-2" v-model="grup_deskripsi"></v-text-field>
+            <v-textarea dense flat outlined class="mt-2" v-model="grup_deskripsi"></v-textarea>
           </v-col>
 
           <!-- Foto -->
@@ -57,11 +57,14 @@
 </template>
 
 <script>
+import Cookie from '@/helper/cookie.js'
 import refreshView from '@/store/grup/viewGrup'
 export default {
   data: () => ({
+    session: '',
     ModalAdd: false,
     btnLoading: true,
+
     grup_nama: '',
     grup_foto: '',
     grup_deskripsi: '',
@@ -69,6 +72,23 @@ export default {
   }),
 
   methods: {
+    default() {
+      this.grup_nama = ''
+      this.grup_foto = ''
+      this.grup_deskripsi = ''
+      this.urlImage = ''
+    },
+
+    async openModal() {
+      this.session = await JSON.parse(Cookie.dec(Cookie.get('myCookie')))
+      this.ModalAdd = true
+    },
+
+    closeModal() {
+      this.default()
+      this.ModalAdd = false
+    },
+
     async add() {
       this.btnLoading = false
 
@@ -79,7 +99,11 @@ export default {
 
       const url = process.env.VUE_APP_API_BASE + 'grup'
       this.http
-        .post(url, data)
+        .post(url, data, {
+          headers: {
+            Authorization: 'Bearer ' + this.session.token
+          }
+        })
         .then(response => {
           this.btnLoading = true
           if (response.data.success) {
@@ -95,6 +119,7 @@ export default {
             refreshView.commit('berhasilAlert', false)
             refreshView.commit('success', response.data.success)
           }
+          this.default()
           this.closeModal()
         })
         .catch(error => {
@@ -105,17 +130,14 @@ export default {
           refreshView.commit('success', error.response.data.success)
           console.log(error.response.status)
           this.btnLoading = true
+          this.default()
+          this.closeModal()
         })
     },
 
     onFile(value) {
       this.grup_foto = value
       this.urlImage = URL.createObjectURL(this.grup_foto)
-      console.log(value)
-    },
-
-    closeModal() {
-      this.ModalAdd = false
     }
   }
 }

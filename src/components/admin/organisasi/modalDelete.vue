@@ -32,6 +32,8 @@
 </template>
 
 <script>
+import Cookie from '@/helper/cookie.js'
+
 import modalHapus from '@/store/organisasi/modalHapus'
 import refreshView from '@/store/organisasi/viewOrganisasi'
 
@@ -55,10 +57,15 @@ export default {
     }
   },
 
+  watch: {
+    async modalHapus() {
+      this.session = await JSON.parse(Cookie.dec(Cookie.get('myCookie')))
+    }
+  },
+
   data: () => ({
-    btnLoading: true,
-    org_foto: '',
-    urlImage: ''
+    session: '',
+    btnLoading: true
   }),
 
   methods: {
@@ -67,7 +74,11 @@ export default {
 
       const url = process.env.VUE_APP_API_BASE + 'organisasi/' + this.hapusItem.org_id
       this.http
-        .delete(url)
+        .delete(url, {
+          headers: {
+            Authorization: 'Bearer ' + this.session.token
+          }
+        })
         .then(response => {
           this.btnLoading = true
           if (response.data.success) {

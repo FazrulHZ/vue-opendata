@@ -1,6 +1,7 @@
 /* eslint-disable eqeqeq */
 /* eslint-disable semi */
 /* eslint-disable space-before-function-paren */
+var CryptoJS = require('crypto-js');
 
 export default {
     get: (cname) => {
@@ -50,5 +51,16 @@ export default {
             }
             return null
         }
+    },
+
+    enc: (value) => {
+        const enc = CryptoJS.AES.encrypt(JSON.stringify(value), '531414009').toString();
+        return enc
+    },
+
+    dec: (value) => {
+        var bytes = CryptoJS.AES.decrypt(value, '531414009');
+        var decryptedData = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
+        return decryptedData
     }
 }

@@ -20,7 +20,7 @@
           <!-- Detail Organisasi -->
           <v-col cols="12" class="mb-n8">
             <span class="subtitle-2">Detail Organisasi</span>
-            <textarea dense flat outlined class="mt-2" v-model="viewItem.org_ket" readonly></textarea>
+            <v-textarea dense flat outlined class="mt-2" v-model="viewItem.org_ket" readonly></v-textarea>
           </v-col>
 
           <!-- Preview -->
@@ -64,7 +64,7 @@ export default {
       if (value) {
         return 'http://localhost:3000/upload/organisasiGambar/' + value
       } else {
-        return 'http://localhost:3000/upload/default.svg'
+        return 'http://localhost:3000/upload/organisasiGambar/default.svg'
       }
     },
 

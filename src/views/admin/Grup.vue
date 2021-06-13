@@ -124,8 +124,8 @@ export default {
     dleteIndex: '',
 
     headers: [
-      { text: 'Nomor', value: 'nomor', width: '100px', align: 'center', sortable: false },
-      { text: 'Nama Grup', align: 'start', value: 'grup_nama' },
+      { text: 'Nomor', value: 'nomor', width: '50px', align: 'center', sortable: false },
+      { text: 'Nama Grup', align: 'start', value: 'grup_nama', width: '210px' },
       { text: 'Deskripsi Grup', align: 'start', value: 'grup_deskripsi' },
       { text: 'Action', value: 'action', width: '100px' }
     ]

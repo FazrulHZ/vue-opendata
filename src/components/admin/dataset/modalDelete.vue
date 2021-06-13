@@ -32,6 +32,8 @@
 </template>
 
 <script>
+import Cookie from '@/helper/cookie.js'
+
 import modalHapus from '@/store/dataset/modalHapus'
 import refreshView from '@/store/dataset/viewDataset'
 
@@ -45,6 +47,7 @@ export default {
         modalHapus.commit('toggleModal', value)
       }
     },
+
     hapusItem: {
       get() {
         return modalHapus.state.dataset
@@ -55,7 +58,14 @@ export default {
     }
   },
 
+  watch: {
+    async modalHapus() {
+      this.session = await JSON.parse(Cookie.dec(Cookie.get('myCookie')))
+    }
+  },
+
   data: () => ({
+    session: '',
     btnLoading: true
   }),
 
@@ -65,7 +75,11 @@ export default {
 
       const url = process.env.VUE_APP_API_BASE + 'dataset/' + this.hapusItem.dataset_id
       this.http
-        .delete(url)
+        .delete(url, {
+          headers: {
+            Authorization: 'Bearer ' + this.session.token
+          }
+        })
         .then(response => {
           this.btnLoading = true
           if (response.data.success) {

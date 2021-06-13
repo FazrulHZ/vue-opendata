@@ -84,6 +84,8 @@
 </template>
 
 <script>
+import Cookie from '@/helper/cookie.js'
+
 import modalEdit from '@/store/user/modalEdit'
 import refreshView from '@/store/user/viewUser'
 import getRef from '@/helper/getRef.js'
@@ -110,12 +112,14 @@ export default {
 
   watch: {
     async modalEdit() {
+      this.session = await JSON.parse(Cookie.dec(Cookie.get('myCookie')))
       this.refOrg = await getRef.Organisasi()
       this.urlImage = this.editedItem.user_foto === '' ? process.env.VUE_APP_API_BASE + 'upload/userGambar/default.png' : process.env.VUE_APP_API_BASE + 'upload/userGambar/' + this.editedItem.user_foto
     }
   },
 
   data: () => ({
+    session: '',
     btnLoading: true,
     show: false,
 
@@ -152,7 +156,11 @@ export default {
 
       const url = process.env.VUE_APP_API_BASE + 'users'
       this.http
-        .put(url, data)
+        .put(url, data, {
+          headers: {
+            Authorization: 'Bearer ' + this.session.token
+          }
+        })
         .then(response => {
           this.btnLoading = true
           if (response.data.success) {

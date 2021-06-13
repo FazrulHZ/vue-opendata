@@ -71,6 +71,8 @@
 </template>
 
 <script>
+import Cookie from '@/helper/cookie.js'
+
 import modalEdit from '@/store/dataset/modalEdit'
 import refreshView from '@/store/dataset/viewDataset'
 import getRef from '@/helper/getRef.js'
@@ -85,6 +87,7 @@ export default {
         modalEdit.commit('toggleModal', value)
       }
     },
+
     editedItem: {
       get() {
         return modalEdit.state.dataset
@@ -97,12 +100,14 @@ export default {
 
   watch: {
     async modalEdit() {
+      this.session = await JSON.parse(Cookie.dec(Cookie.get('myCookie')))
       this.refOrg = await getRef.Organisasi()
       this.refGrup = await getRef.Grup()
     }
   },
 
   data: () => ({
+    session: '',
     btnLoading: true,
     show: false,
 
@@ -126,7 +131,11 @@ export default {
 
       const url = process.env.VUE_APP_API_BASE + 'dataset'
       this.http
-        .put(url, data)
+        .put(url, data, {
+          headers: {
+            Authorization: 'Bearer ' + this.session.token
+          }
+        })
         .then(response => {
           this.btnLoading = true
           if (response.data.success) {

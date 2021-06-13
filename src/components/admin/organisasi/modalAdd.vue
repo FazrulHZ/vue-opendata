@@ -3,7 +3,7 @@
     <template v-slot:activator="{ on: modal, attrs }">
       <v-tooltip bottom>
         <template v-slot:activator="{ on: tooltip }">
-          <v-btn small fab text v-bind="attrs" v-on="{ ...tooltip, ...modal }">
+          <v-btn small fab text v-bind="attrs" v-on="{ ...tooltip, ...modal }" @click="openModal()">
             <v-icon>mdi-plus-box</v-icon>
           </v-btn>
         </template>
@@ -15,7 +15,7 @@
       <v-toolbar dark color="primary" dense flat>
         <v-toolbar-title class="subtitle-1">Tambah Organisasi</v-toolbar-title>
         <v-spacer></v-spacer>
-        <v-btn icon dark @click="ModalAdd = false">
+        <v-btn icon dark @click="closeModal()">
           <v-icon>mdi-close</v-icon>
         </v-btn>
       </v-toolbar>
@@ -57,9 +57,11 @@
 </template>
 
 <script>
+import Cookie from '@/helper/cookie.js'
 import refreshView from '@/store/organisasi/viewOrganisasi'
 export default {
   data: () => ({
+    session: '',
     ModalAdd: false,
     btnLoading: true,
 
@@ -70,6 +72,23 @@ export default {
   }),
 
   methods: {
+    default() {
+      this.org_nama = ''
+      this.org_ket = ''
+      this.org_foto = ''
+      this.urlImage = ''
+    },
+
+    async openModal() {
+      this.session = await JSON.parse(Cookie.dec(Cookie.get('myCookie')))
+      this.ModalAdd = true
+    },
+
+    closeModal() {
+      this.default()
+      this.ModalAdd = false
+    },
+
     async add() {
       this.btnLoading = false
 
@@ -80,7 +99,11 @@ export default {
 
       const url = process.env.VUE_APP_API_BASE + 'organisasi'
       this.http
-        .post(url, data)
+        .post(url, data, {
+          headers: {
+            Authorization: 'Bearer ' + this.session.token
+          }
+        })
         .then(response => {
           this.btnLoading = true
           if (response.data.success) {
@@ -96,6 +119,7 @@ export default {
             refreshView.commit('berhasilAlert', false)
             refreshView.commit('success', response.data.success)
           }
+          this.default()
           this.closeModal()
         })
         .catch(error => {
@@ -106,16 +130,14 @@ export default {
           refreshView.commit('success', error.response.data.success)
           console.log(error.response.status)
           this.btnLoading = true
+          this.default()
+          this.closeModal()
         })
     },
 
     onFile(value) {
       this.org_foto = value
       this.urlImage = URL.createObjectURL(this.org_foto)
-    },
-
-    closeModal() {
-      this.ModalAdd = false
     }
   }
 }

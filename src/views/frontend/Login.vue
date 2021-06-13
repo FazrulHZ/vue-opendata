@@ -86,10 +86,17 @@ export default {
         try {
           const response = await this.http.post(url, data)
           if (response.data.success) {
-            await Cookie.set('session_ok', response.data.success)
-            await Cookie.set('user_fullname', response.data.data.identitas.user_fullname)
-            await Cookie.set('user_foto', response.data.data.identitas.user_foto)
-            await Cookie.set('token', response.data.data.token)
+            await Cookie.set(
+              'myCookie',
+              Cookie.enc(
+                JSON.stringify({
+                  session_ok: response.data.success,
+                  user_fullname: response.data.data.identitas.user_fullname,
+                  user_foto: response.data.data.identitas.user_foto,
+                  token: response.data.data.token
+                })
+              )
+            )
             this.alertGagal = false
             this.$router.push('/')
             this.loadingButton = true

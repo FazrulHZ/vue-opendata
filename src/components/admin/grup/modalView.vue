@@ -20,7 +20,7 @@
           <!-- Deskripsi Grup -->
           <v-col cols="12" class="mb-n8">
             <span class="subtitle-2">Deskripsi Grup</span>
-            <v-text-field dense flat outlined class="mt-2" v-model="viewItem.grup_deskripsi" readonly></v-text-field>
+            <v-textarea dense flat outlined class="mt-2" v-model="viewItem.grup_deskripsi" readonly></v-textarea>
           </v-col>
 
           <!-- Preview -->
@@ -64,7 +64,7 @@ export default {
       if (value) {
         return 'http://localhost:3000/upload/grupGambar/' + value
       } else {
-        return 'http://localhost:3000/upload/default.svg'
+        return 'http://localhost:3000/upload/grupGambar/default.jpg'
       }
     },
 

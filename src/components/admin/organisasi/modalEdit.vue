@@ -20,7 +20,7 @@
           <!-- Detail Organisasi -->
           <v-col cols="12" class="mb-n8">
             <span class="subtitle-2">Detail Organisasi</span>
-            <textarea dense flat outlined class="mt-2" v-model="editedItem.org_ket"></textarea>
+            <v-textarea dense flat outlined class="mt-2" v-model="editedItem.org_ket"></v-textarea>
           </v-col>
 
           <!-- Preview -->
@@ -52,6 +52,8 @@
 </template>
 
 <script>
+import Cookie from '@/helper/cookie.js'
+
 import modalEdit from '@/store/organisasi/modalEdit'
 import refreshView from '@/store/organisasi/viewOrganisasi'
 
@@ -75,8 +77,16 @@ export default {
     }
   },
 
+  watch: {
+    async modalEdit() {
+      this.session = await JSON.parse(Cookie.dec(Cookie.get('myCookie')))
+    }
+  },
+
   data: () => ({
+    session: '',
     btnLoading: true,
+
     org_foto: '',
     urlImage: ''
   }),
@@ -86,7 +96,7 @@ export default {
       if (value) {
         return 'http://localhost:3000/upload/organisasiGambar/' + value
       } else {
-        return 'http://localhost:3000/upload/default.svg'
+        return 'http://localhost:3000/upload/organisasiGambar/default.svg'
       }
     },
 
@@ -101,7 +111,11 @@ export default {
 
       const url = process.env.VUE_APP_API_BASE + 'organisasi'
       this.http
-        .put(url, data)
+        .put(url, data, {
+          headers: {
+            Authorization: 'Bearer ' + this.session.token
+          }
+        })
         .then(response => {
           this.btnLoading = true
           if (response.data.success) {

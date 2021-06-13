@@ -17,10 +17,10 @@
             <v-text-field dense flat outlined class="mt-2" v-model="editedItem.grup_nama"></v-text-field>
           </v-col>
 
-          <!-- Nama Grup -->
+          <!-- Deskripsi Grup -->
           <v-col cols="12" class="mb-n8">
             <span class="subtitle-2">Deskripsi Grup</span>
-            <v-text-field dense flat outlined class="mt-2" v-model="editedItem.grup_deskripsi"></v-text-field>
+            <v-textarea dense flat outlined class="mt-2" v-model="editedItem.grup_deskripsi"></v-textarea>
           </v-col>
 
           <!-- Preview -->
@@ -52,6 +52,8 @@
 </template>
 
 <script>
+import Cookie from '@/helper/cookie.js'
+
 import modalEdit from '@/store/grup/modalEdit'
 import refreshView from '@/store/grup/viewGrup'
 
@@ -75,8 +77,16 @@ export default {
     }
   },
 
+  watch: {
+    async modalEdit() {
+      this.session = await JSON.parse(Cookie.dec(Cookie.get('myCookie')))
+    }
+  },
+
   data: () => ({
+    session: '',
     btnLoading: true,
+
     grup_foto: '',
     urlImage: ''
   }),
@@ -86,7 +96,7 @@ export default {
       if (value) {
         return 'http://localhost:3000/upload/grupGambar/' + value
       } else {
-        return 'http://localhost:3000/upload/default.svg'
+        return 'http://localhost:3000/upload/grupGambar/default.jpg'
       }
     },
 
@@ -101,7 +111,11 @@ export default {
 
       const url = process.env.VUE_APP_API_BASE + 'grup'
       this.http
-        .put(url, data)
+        .put(url, data, {
+          headers: {
+            Authorization: 'Bearer ' + this.session.token
+          }
+        })
         .then(response => {
           this.btnLoading = true
           if (response.data.success) {
