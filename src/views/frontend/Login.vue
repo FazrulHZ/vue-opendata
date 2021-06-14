@@ -91,6 +91,7 @@ export default {
               Cookie.enc(
                 JSON.stringify({
                   session_ok: response.data.success,
+                  user_nama: response.data.data.identitas.user_nama,
                   user_fullname: response.data.data.identitas.user_fullname,
                   user_foto: response.data.data.identitas.user_foto,
                   user_lvl: response.data.data.identitas.user_lvl,
