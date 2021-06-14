@@ -63,7 +63,7 @@ const routes = [
             /* webpackChunkName: "Grup" */
             /* webpackPrefetch: true */
             /* webpackPreload: true */
-            '../views/frontend/Grup.vue'
+            '../views/frontend/grup/Grup.vue'
           )
         },
         {

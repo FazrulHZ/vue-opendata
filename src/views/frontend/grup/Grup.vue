@@ -14,14 +14,14 @@
 
     <div>
       <v-row>
-        <v-col cols="12" md="3" v-for="item in organisasis" :key="item.id">
-          <v-card class="pa-4" :to="'/organisasi/' + item.org_slug">
+        <v-col cols="12" md="3" v-for="item in grups" :key="item.id">
+          <v-card class="pa-4" :to="'/grup/' + item.grup_slug">
             <v-row no-gutters>
-              <v-col cols="3" class="my-auto">
-                <v-icon size="50" color="primary">mdi-office-building-outline</v-icon>
+              <v-col cols="12">
+                <v-img :src="getIMG(item.grup_foto)" max-height="200"></v-img>
               </v-col>
-              <v-col cols="9">
-                <span>{{ item.org_nama }}</span>
+              <v-col cols="12" class="text-center mt-3">
+                <span>{{ item.grup_nama }}</span>
               </v-col>
               <v-col cols="12" class="text-center mt-3">
                 <v-divider class="mb-3"></v-divider>
@@ -47,14 +47,14 @@ export default {
         href: '/'
       },
       {
-        text: 'Organisasi',
+        text: 'Grup',
         disabled: false,
-        href: '/organisasi'
+        href: '/grup'
       }
     ],
 
     jumlah: 0,
-    organisasis: []
+    grups: []
   }),
 
   mounted() {
@@ -64,14 +64,22 @@ export default {
   methods: {
     getData() {
       this.http
-        .get(process.env.VUE_APP_API_BASE + 'dataset/organisasi')
+        .get(process.env.VUE_APP_API_BASE + 'dataset/grup')
         .then(res => {
           this.jumlah = res.data.count
-          this.organisasis = res.data.data
+          this.grups = res.data.data
         })
         .catch(err => {
           console.log(err)
         })
+    },
+
+    getIMG(value) {
+      if (value) {
+        return 'http://localhost:3000/upload/grupGambar/' + value
+      } else {
+        return 'http://localhost:3000/upload/grupGambar/default.jpg'
+      }
     },
 
     tglFormat(tgl) {

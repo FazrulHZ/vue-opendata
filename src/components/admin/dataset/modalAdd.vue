@@ -175,6 +175,7 @@ export default {
           console.log(error.response.status)
           this.default()
           this.btnLoading = true
+          this.closeModal()
         })
     },
 

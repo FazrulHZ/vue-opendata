@@ -6,8 +6,8 @@
     </v-card>
 
     <v-row class="mt-10">
-      <v-col class="12" md="4">
-        <v-card elevation="2" to="/data">
+      <v-col class="12" md="6">
+        <v-card elevation="2" to="/admin/dataset">
           <v-row no-gutters class="pa-3">
             <div class="mr-3 my-auto">
               <v-icon size="65" color="primary">mdi-file-document-multiple-outline</v-icon>
@@ -24,8 +24,8 @@
         </v-card>
       </v-col>
 
-      <v-col class="12" md="4">
-        <v-card elevation="2" to="/data">
+      <v-col class="12" md="6">
+        <v-card elevation="2" to="/admin/dataset">
           <v-row no-gutters class="pa-3">
             <div class="mr-3 my-auto">
               <v-icon size="65" color="primary">mdi-database-outline</v-icon>
@@ -36,24 +36,6 @@
               </div>
               <div>
                 File Data
-              </div>
-            </div>
-          </v-row>
-        </v-card>
-      </v-col>
-
-      <v-col class="12" md="4">
-        <v-card elevation="2" to="/grup">
-          <v-row no-gutters class="pa-3">
-            <div class="mr-3 my-auto">
-              <v-icon size="65" color="primary">mdi-format-list-text</v-icon>
-            </div>
-            <div>
-              <div>
-                <h1>{{ jumlahGrup }}</h1>
-              </div>
-              <div>
-                Grup
               </div>
             </div>
           </v-row>

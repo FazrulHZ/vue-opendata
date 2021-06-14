@@ -141,6 +141,7 @@ export default {
           refreshView.commit('success', error.response.data.success)
           console.log(error.response.status)
           this.btnLoading = true
+          this.closeModal()
         })
     },
 
