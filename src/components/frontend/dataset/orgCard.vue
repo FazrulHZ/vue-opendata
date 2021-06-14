@@ -1,16 +1,16 @@
 <template>
   <div>
     <div>
-      <v-img :src="getIMG(organisasi.org_foto)"></v-img>
+      <v-img :src="getIMG(dataset.org_foto)"></v-img>
     </div>
-    {{ organisasi.org_foto }}
+    {{ dataset.org_foto }}
 
     <div class="mt-5">
-      <h3>{{ organisasi.org_nama }}</h3>
+      <h3>{{ dataset.org_nama }}</h3>
     </div>
 
     <div class="mt-3">
-      <span>{{ organisasi.org_ket }}</span>
+      <span>{{ dataset.org_ket }}</span>
     </div>
   </div>
 </template>
@@ -23,7 +23,7 @@ export default {
 
   data: () => ({
     get_slug: '',
-    organisasi: {}
+    dataset: {}
   }),
 
   mounted() {
@@ -35,15 +35,15 @@ export default {
       if (value) {
         return 'http://localhost:3000/upload/organisasiGambar/' + value
       } else {
-        return 'http://localhost:3000/upload/default.svg'
+        return 'http://localhost:3000/upload/organisasiGambar/default.svg'
       }
     },
 
     getData() {
       this.http
-        .get(process.env.VUE_APP_API_BASE + 'organisasi/' + this.get_slug)
+        .get(process.env.VUE_APP_API_BASE + 'dataset/' + this.get_slug)
         .then(res => {
-          this.organisasi = res.data.data
+          this.dataset = res.data.data
         })
         .catch(err => {
           console.log(err)

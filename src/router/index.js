@@ -114,6 +114,7 @@ const routes = [
       [
         {
           path: '/admin/main',
+          name: 'home',
           component: () => import(
             /* webpackChunkName: "adminHome" */
             /* webpackPrefetch: true */
@@ -150,6 +151,9 @@ const routes = [
         },
         {
           path: '/admin/user',
+          meta: {
+            superadmin: true
+          },
           component: () => import(
             /* webpackChunkName: "adminUser" */
             /* webpackPrefetch: true */
@@ -176,7 +180,16 @@ router.beforeEach(async (to, from, next) => {
         params: { nextUrl: to.fullPath }
       })
     } else {
-      next()
+      const session = JSON.parse(Cookie.dec(Cookie.get('myCookie')))
+      if (to.matched.some(record => record.meta.superadmin)) {
+        if (session.user_lvl === 'superadmin') {
+          next()
+        } else {
+          next({ name: 'home' })
+        }
+      } else {
+        next()
+      }
     }
   } else {
     next()

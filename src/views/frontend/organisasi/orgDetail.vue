@@ -1,12 +1,25 @@
 <template>
   <div>
     <v-row>
-      <v-col cols="12" md="3">
+      <v-col v-if="dekstop" cols="12" md="3" style="position: sticky; top:70px; align-self: start;">
         <h2>Organisasi</h2>
         <div class="mt-5">
-          <datasetCard />
+          <orgCard />
         </div>
       </v-col>
+
+      <v-col v-else cols="12" md="3">
+        <h2>Organisasi</h2>
+        <div class="mt-5">
+          <orgCard />
+        </div>
+      </v-col>
+
+      <v-col cols="12" md="1" class="text-center">
+        <v-divider v-if="dekstop" vertical></v-divider>
+        <v-divider v-else></v-divider>
+      </v-col>
+
       <v-col cols="12" md="8">
         <div>
           <v-text-field label="Cari Dataset" append-icon="mdi-magnify" solo rounded></v-text-field>
@@ -33,10 +46,21 @@
 </template>
 
 <script>
-import datasetCard from '@/components/frontend/organisasi/datasetCard'
+import orgCard from '@/components/frontend/organisasi/orgCard'
+
 export default {
   components: {
-    datasetCard
+    orgCard
+  },
+
+  data: () => ({
+    dekstop: true
+  }),
+
+  created() {
+    if (this.$vuetify.breakpoint.name === 'xs' || this.$vuetify.breakpoint.name === 'sm') {
+      this.dekstop = false
+    }
   }
 }
 </script>

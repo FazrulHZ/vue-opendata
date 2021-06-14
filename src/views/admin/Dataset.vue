@@ -124,7 +124,7 @@ export default {
     dleteIndex: '',
 
     headers: [
-      { text: 'Nomor', value: 'nomor', width: '100px', align: 'center', sortable: false },
+      { text: 'Nomor', value: 'nomor', width: '50px', align: 'center', sortable: false },
       { text: 'Nama Dataset', align: 'start', value: 'dataset_nama' },
       { text: 'Organisasi', align: 'start', value: 'org_nama' },
       { text: 'Grup', align: 'start', value: 'grup_nama' },

@@ -124,7 +124,7 @@ export default {
     dleteIndex: '',
 
     headers: [
-      { text: 'Nomor', value: 'nomor', width: '100px', align: 'center', sortable: false },
+      { text: 'Nomor', value: 'nomor', width: '50px', align: 'center', sortable: false },
       { text: 'Nama Organisasi', align: 'start', value: 'org_nama' },
       { text: 'Action', value: 'action', width: '100px' }
     ]

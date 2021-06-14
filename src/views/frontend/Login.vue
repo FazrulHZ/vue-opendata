@@ -93,6 +93,7 @@ export default {
                   session_ok: response.data.success,
                   user_fullname: response.data.data.identitas.user_fullname,
                   user_foto: response.data.data.identitas.user_foto,
+                  user_lvl: response.data.data.identitas.user_lvl,
                   token: response.data.data.token
                 })
               )

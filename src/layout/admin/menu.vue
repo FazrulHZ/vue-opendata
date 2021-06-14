@@ -45,7 +45,7 @@
 
         <v-divider></v-divider>
 
-        <v-list-item :to="'/admin/user'">
+        <v-list-item v-if="session.user_lvl === 'superadmin'" :to="'/admin/user'">
           <v-list-item-icon>
             <v-icon>mdi-account-outline</v-icon>
           </v-list-item-icon>
@@ -57,6 +57,7 @@
 </template>
 
 <script>
+import Cookie from '@/helper/cookie.js'
 import drawerState from '@/store/drawerAdmin'
 
 export default {
@@ -65,11 +66,20 @@ export default {
       get() {
         return drawerState.state.drawer
       },
+
       set(value) {
         // console.log('is drawer open: ' + value)
         drawerState.commit('toggle', value)
       }
     }
+  },
+
+  data: () => ({
+    session: ''
+  }),
+
+  async mounted() {
+    this.session = await JSON.parse(Cookie.dec(Cookie.get('myCookie')))
   }
 }
 </script>

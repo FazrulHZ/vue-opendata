@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="ModalAdd" max-width="50%">
+  <v-dialog v-model="ModalAdd" :max-width="dekstop">
     <template v-slot:activator="{ on: modal, attrs }">
       <v-tooltip bottom>
         <template v-slot:activator="{ on: tooltip }">
@@ -32,15 +32,13 @@
 
           <v-row>
             <!-- Sumber Dataset -->
-            <v-col cols="12" class="mb-n10">
+            <v-col cols="12" md="6" class="mb-n10">
               <span class="subtitle-2">Sumber Dataset</span>
               <v-text-field dense flat outlined class="mt-2" v-model="dataset_sumber"></v-text-field>
             </v-col>
-          </v-row>
 
-          <v-row>
             <!-- Cakupan Dataset -->
-            <v-col cols="12" class="mb-n10">
+            <v-col cols="12" md="6" class="mb-n10">
               <span class="subtitle-2">Cakupan Dataset</span>
               <v-text-field dense flat outlined class="mt-2" v-model="dataset_cakupan"></v-text-field>
             </v-col>
@@ -50,21 +48,19 @@
             <!-- Deskripsi Dataset -->
             <v-col cols="12" class="mb-n10">
               <span class="subtitle-2">Deskripsi Dataset</span>
-              <v-text-field dense flat outlined class="mt-2" v-model="dataset_deskripsi"></v-text-field>
+              <v-textarea dense flat outlined class="mt-2" v-model="dataset_deskripsi"></v-textarea>
             </v-col>
           </v-row>
 
           <v-row>
             <!-- Organisasi -->
-            <v-col cols="12" class="mb-n10">
+            <v-col cols="12" md="6" class="mb-n10">
               <span class="subtitle-2">Organisasi</span>
               <v-autocomplete v-model="org_id" :items="refOrg" item-text="org_nama" item-value="org_id" outlined dense> </v-autocomplete>
             </v-col>
-          </v-row>
 
-          <v-row>
             <!-- Grup -->
-            <v-col cols="12">
+            <v-col cols="12" md="6">
               <span class="subtitle-2">Grup</span>
               <v-autocomplete v-model="grup_id" :items="refGrup" item-text="grup_nama" item-value="grup_id" outlined dense> </v-autocomplete>
             </v-col>
@@ -88,8 +84,15 @@ import refreshView from '@/store/dataset/viewDataset'
 import getRef from '@/helper/getRef.js'
 
 export default {
+  created() {
+    if (this.$vuetify.breakpoint.name === 'xs' || this.$vuetify.breakpoint.name === 'sm') {
+      this.dekstop = '100%'
+    }
+  },
+
   data: () => ({
     session: '',
+    dekstop: '80%',
     ModalAdd: false,
     btnLoading: true,
 

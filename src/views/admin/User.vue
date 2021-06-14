@@ -131,7 +131,7 @@ export default {
     dleteIndex: '',
 
     headers: [
-      { text: 'Nomor', value: 'nomor', width: '100px', align: 'center', sortable: false },
+      { text: 'Nomor', value: 'nomor', width: '50px', align: 'center', sortable: false },
       { text: 'Nama user', align: 'start', value: 'user_fullname' },
       { text: 'Email', align: 'start', value: 'user_email' },
       { text: 'Username', align: 'start', value: 'user_nama' },

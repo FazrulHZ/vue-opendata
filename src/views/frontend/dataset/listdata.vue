@@ -4,7 +4,7 @@
       <v-col cols="12" md="3">
         <h2>Organisasi</h2>
         <div class="mt-5">
-          <datasetCard />
+          <orgCard />
         </div>
       </v-col>
       <v-col cols="12" md="8">
@@ -33,10 +33,11 @@
 </template>
 
 <script>
-import datasetCard from '@/components/frontend/datasetCard'
+import orgCard from '@/components/frontend/dataset/orgCard'
 export default {
   components: {
-    datasetCard
-  }
+    orgCard
+  },
+  data: () => ({})
 }
 </script>
