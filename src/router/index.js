@@ -150,6 +150,15 @@ const routes = [
           )
         },
         {
+          path: '/admin/data',
+          component: () => import(
+            /* webpackChunkName: "adminData" */
+            /* webpackPrefetch: true */
+            /* webpackPreload: true */
+            '../views/admin/Data.vue'
+          )
+        },
+        {
           path: '/admin/user',
           meta: {
             superadmin: true

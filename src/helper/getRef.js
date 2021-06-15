@@ -13,5 +13,11 @@ export default {
         const url = process.env.VUE_APP_API_BASE + 'grup'
         const response = await axios.get(url)
         return response.data.data
+    },
+
+    Dataset: async (token) => {
+        const url = process.env.VUE_APP_API_BASE + 'dataset'
+        const response = await axios.get(url)
+        return response.data.data
     }
 }

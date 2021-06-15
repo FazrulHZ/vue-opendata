@@ -22,6 +22,13 @@
           <v-list-item-title>Home</v-list-item-title>
         </v-list-item>
 
+        <v-list-item :to="'/admin/data'">
+          <v-list-item-icon>
+            <v-icon>mdi-database-outline</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title>Data</v-list-item-title>
+        </v-list-item>
+
         <v-list-item :to="'/admin/dataset'">
           <v-list-item-icon>
             <v-icon>mdi-clipboard-file-outline</v-icon>
