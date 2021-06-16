@@ -11,7 +11,7 @@
     <div class="mb-5"><span class="font-weight-black">1850</span> <span>Dataset ditemukan</span></div>
 
     <div>
-      <v-card v-for="item in datasets" :key="item.id" :to="'/readmore/' + item.dataset_slug" class="mb-10">
+      <v-card v-for="item in datasets" :key="item.id" :to="'/dataset/' + item.dataset_slug" class="mb-10">
         <v-row no-gutters class="pa-5">
           <v-col cols="2" md="1" class="my-auto">
             <v-icon size="65">mdi-file-document-outline</v-icon>
@@ -57,7 +57,7 @@ export default {
       {
         text: 'Data',
         disabled: false,
-        href: '/data'
+        href: '/dataset'
       }
     ],
 

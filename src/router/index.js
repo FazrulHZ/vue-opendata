@@ -25,18 +25,18 @@ const routes = [
       ]
   },
   {
-    path: '/data',
+    path: '/dataset',
     name: 'SubMain',
     component: SubMain,
     children:
       [
         {
-          path: '/data',
+          path: '/dataset',
           component: () => import(
             /* webpackChunkName: "Data" */
             /* webpackPrefetch: true */
             /* webpackPreload: true */
-            '../views/frontend/Data.vue'
+            '../views/frontend/Dataset.vue'
           )
         },
         {
@@ -76,12 +76,21 @@ const routes = [
           )
         },
         {
-          path: '/readmore/:slug',
+          path: '/dataset/:slug',
           component: () => import(
             /* webpackChunkName: "Readmore Dataset" */
             /* webpackPrefetch: true */
             /* webpackPreload: true */
             '../views/frontend/dataset/readmore.vue'
+          )
+        },
+        {
+          path: '/data/:slug',
+          component: () => import(
+            /* webpackChunkName: "Readmore Data" */
+            /* webpackPrefetch: true */
+            /* webpackPreload: true */
+            '../views/frontend/data/readmore.vue'
           )
         }
       ]

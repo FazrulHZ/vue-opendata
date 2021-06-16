@@ -28,17 +28,17 @@
 
         <v-col cols="12" md="8">
           <div>
-            <h2>{{ dataset.dataset_nama }}</h2>
+            <h2>Tahun {{ data.data_tahun }} - {{ data.data_nama }}</h2>
             <div class="mt-2">
-              {{ dataset.dataset_deskripsi }}
+              {{ data.data_ket }}
             </div>
             <div class="mt-5">
               <v-row>
                 <v-col cols="12" md="3">
                   <div>
                     <h4>Grup :</h4>
-                    <v-chip small color="green" text-color="white" label class="mt-2">
-                      {{ dataset.grup_nama }}
+                    <v-chip small color="green" text-color="white" label class="mt-1">
+                      {{ data.grup_nama }}
                     </v-chip>
                   </div>
                 </v-col>
@@ -50,30 +50,10 @@
                     <div>
                       <v-row>
                         <v-col cols="12" md="3">
-                          <span class="subtitle-2">Sumber Data</span>
-                        </v-col>
-                        <v-col cols="12" md="9">
-                          <span class="subtitle-2">: {{ dataset.dataset_sumber }}</span>
-                        </v-col>
-                      </v-row>
-                    </div>
-                    <div>
-                      <v-row>
-                        <v-col cols="12" md="3">
-                          <span class="subtitle-2">Cakupan Data</span>
-                        </v-col>
-                        <v-col cols="12" md="9">
-                          <span class="subtitle-2">: {{ dataset.dataset_cakupan }}</span>
-                        </v-col>
-                      </v-row>
-                    </div>
-                    <div>
-                      <v-row>
-                        <v-col cols="12" md="3">
                           <span class="subtitle-2">Dibuat</span>
                         </v-col>
                         <v-col cols="12" md="9">
-                          <span class="subtitle-2">: {{ dataset.created_at }}</span>
+                          <span class="subtitle-2">: {{ data.created_at }}</span>
                         </v-col>
                       </v-row>
                     </div>
@@ -83,27 +63,12 @@
             </div>
           </div>
           <v-divider class="my-5"></v-divider>
-          <div>
-            <h2>Data Dan Sumber Data :</h2>
+          <div class="text-right">
+            <v-btn color="primary" depressed @click="download">
+              <v-icon>mdi-download</v-icon>
+              Unduh
+            </v-btn>
           </div>
-
-          <div class="mt-2" v-if="datas.length === 0">
-            <v-alert outlined type="error"> Belum Ada <strong>Data</strong> Untuk <strong>Dataset</strong> Ini </v-alert>
-          </div>
-
-          <v-card v-else v-for="item in datas" :key="item.id" :to="'/data/' + item.data_slug" class="mt-5">
-            <v-row no-gutters class="py-5">
-              <v-col cols="2" class="my-auto text-center">
-                <v-icon size="65">mdi-file-document-outline</v-icon>
-              </v-col>
-              <v-col cols="10">
-                <div class="font-weight-black primary--text">
-                  Tahun {{ item.data_tahun }} - {{ item.data_nama }}
-                </div>
-                {{ item.data_ket.slice(0, 200) }} ...
-              </v-col>
-            </v-row>
-          </v-card>
         </v-col>
       </v-row>
     </v-card>
@@ -111,7 +76,7 @@
 </template>
 
 <script>
-import orgCard from '@/components/frontend/dataset/orgCard'
+import orgCard from '@/components/frontend/data/orgCard'
 export default {
   components: {
     orgCard
@@ -128,32 +93,19 @@ export default {
     dekstop: true,
     get_slug: '',
 
-    dataset: {},
-    datas: []
+    data: {}
   }),
 
-  async mounted() {
-    await this.getDataset()
+  mounted() {
     this.getData()
   },
 
   methods: {
-    getDataset() {
-      this.http
-        .get(process.env.VUE_APP_API_BASE + 'dataset/' + this.get_slug)
-        .then(res => {
-          this.dataset = res.data.data
-        })
-        .catch(err => {
-          console.log(err)
-        })
-    },
-
     getData() {
       this.http
-        .get(process.env.VUE_APP_API_BASE + 'data/dataset/' + this.get_slug)
+        .get(process.env.VUE_APP_API_BASE + 'data/' + this.get_slug)
         .then(res => {
-          this.datas = res.data.data
+          this.data = res.data.data
         })
         .catch(err => {
           console.log(err)
@@ -169,6 +121,10 @@ export default {
       })
       const formatted = dateTimeFormat.formatToParts(date)
       return formatted[0].value + ' ' + formatted[2].value + ' ' + formatted[4].value
+    },
+
+    download() {
+      window.location = process.env.VUE_APP_API_BASE + 'upload/data/' + this.data.data_file
     }
   }
 }

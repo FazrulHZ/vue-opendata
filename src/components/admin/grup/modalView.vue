@@ -62,9 +62,9 @@ export default {
   methods: {
     getIMG(value) {
       if (value) {
-        return 'http://localhost:3000/upload/grupGambar/' + value
+        return process.env.VUE_APP_API_BASE + 'upload/grupGambar/' + value
       } else {
-        return 'http://localhost:3000/upload/grupGambar/default.jpg'
+        return process.env.VUE_APP_API_BASE + 'upload/grupGambar/default.jpg'
       }
     },
 

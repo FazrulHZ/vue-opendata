@@ -22,7 +22,7 @@
           <v-list-item-title>Home</v-list-item-title>
         </v-list-item>
 
-        <v-list-item :to="'/data'">
+        <v-list-item :to="'/dataset'">
           <v-list-item-icon>
             <v-icon>mdi-clipboard-file-outline</v-icon>
           </v-list-item-icon>

@@ -55,7 +55,7 @@ export default {
     },
 
     data() {
-      this.$router.push('/data').catch(() => {})
+      this.$router.push('/dataset').catch(() => {})
     },
 
     organisasi() {

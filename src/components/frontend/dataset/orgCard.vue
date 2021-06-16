@@ -33,9 +33,9 @@ export default {
   methods: {
     getIMG(value) {
       if (value) {
-        return 'http://localhost:3000/upload/organisasiGambar/' + value
+        return process.env.VUE_APP_API_BASE + 'upload/organisasiGambar/' + value
       } else {
-        return 'http://localhost:3000/upload/organisasiGambar/default.svg'
+        return process.env.VUE_APP_API_BASE + 'upload/organisasiGambar/default.svg'
       }
     },
 
