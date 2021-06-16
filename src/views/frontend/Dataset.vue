@@ -5,12 +5,18 @@
     </v-card>
 
     <div class="mt-10">
-      <v-text-field label="Cari Dataset" append-icon="mdi-magnify" solo rounded></v-text-field>
+      <v-text-field v-model="cariDataset" label="Cari Dataset" append-icon="mdi-magnify" solo rounded v-on:keyup.enter="cariData"></v-text-field>
     </div>
 
-    <div class="mb-5"><span class="font-weight-black">1850</span> <span>Dataset ditemukan</span></div>
+    <div class="mb-5">
+      <span class="font-weight-black">{{ count }}</span> <span>Dataset ditemukan</span>
+    </div>
 
-    <div>
+    <div v-if="cariLoading">
+      <v-progress-linear color="primary" indeterminate rounded height="6"></v-progress-linear>
+    </div>
+
+    <div v-else>
       <v-card v-for="item in datasets" :key="item.id" :to="'/dataset/' + item.dataset_slug" class="mb-10">
         <v-row no-gutters class="pa-5">
           <v-col cols="2" md="1" class="my-auto">
@@ -48,6 +54,8 @@ export default {
   name: 'Data',
 
   data: () => ({
+    cariLoading: false,
+
     items: [
       {
         text: 'Home',
@@ -61,6 +69,9 @@ export default {
       }
     ],
 
+    cariDataset: '',
+
+    count: 0,
     datasets: []
   }),
 
@@ -74,9 +85,26 @@ export default {
         .get(process.env.VUE_APP_API_BASE + 'dataset')
         .then(res => {
           this.datasets = res.data.data
+          this.count = res.data.count
         })
         .catch(err => {
           console.log(err)
+        })
+    },
+
+    cariData() {
+      this.cariLoading = true
+      const data = { dataset_nama: this.cariDataset }
+      this.http
+        .post(process.env.VUE_APP_API_BASE + 'dataset/cari', data)
+        .then(res => {
+          this.datasets = res.data.data
+          this.count = res.data.count
+          this.cariLoading = false
+        })
+        .catch(err => {
+          console.log(err)
+          this.cariLoading = false
         })
     },
 
