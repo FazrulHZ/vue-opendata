@@ -73,7 +73,7 @@
                           <span class="subtitle-2">Dibuat</span>
                         </v-col>
                         <v-col cols="12" md="9">
-                          <span class="subtitle-2">: {{ dataset.created_at }}</span>
+                          <span class="subtitle-2">: {{ tglFormat(dataset.created_at) }}</span>
                         </v-col>
                       </v-row>
                     </div>
@@ -91,7 +91,7 @@
             <v-alert outlined type="error"> Belum Ada <strong>Data</strong> Untuk <strong>Dataset</strong> Ini </v-alert>
           </div>
 
-          <v-card v-else v-for="item in datas" :key="item.id" :to="'/data/' + item.data_slug" class="mt-5">
+          <v-card v-else v-for="item in datas" :key="item.data_id" :to="'/data/' + item.data_slug" class="mt-5">
             <v-row no-gutters class="py-5">
               <v-col cols="2" class="my-auto text-center">
                 <v-icon size="65">mdi-file-document-outline</v-icon>

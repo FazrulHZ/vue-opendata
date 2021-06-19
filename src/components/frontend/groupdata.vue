@@ -2,7 +2,7 @@
   <div>
     <v-row>
       <v-col cols="12" md="3">
-        <v-card elevation="2" to="/data">
+        <v-card elevation="2" to="/dataset">
           <v-row no-gutters class="pa-3">
             <div class="mr-3 my-auto">
               <v-icon size="65" :color="iconColor">mdi-file-document-multiple-outline</v-icon>
@@ -19,7 +19,7 @@
         </v-card>
       </v-col>
       <v-col cols="12" md="3">
-        <v-card elevation="2" to="/data">
+        <v-card elevation="2" to="/dataset">
           <v-row no-gutters class="pa-3">
             <div class="mr-3 my-auto">
               <v-icon size="65" :color="iconColor">mdi-database-outline</v-icon>

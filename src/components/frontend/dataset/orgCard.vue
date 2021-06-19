@@ -44,6 +44,7 @@ export default {
         .get(process.env.VUE_APP_API_BASE + 'dataset/' + this.get_slug)
         .then(res => {
           this.dataset = res.data.data
+          console.log(this.dataset)
         })
         .catch(err => {
           console.log(err)

@@ -17,7 +17,7 @@
     </div>
 
     <div v-else>
-      <v-card v-for="item in datasets" :key="item.id" :to="'/dataset/' + item.dataset_slug" class="mb-10">
+      <v-card v-for="item in datasets" :key="item.dataset_id" :to="'/dataset/' + item.dataset_slug" class="mb-10">
         <v-row no-gutters class="pa-5">
           <v-col cols="2" md="1" class="my-auto">
             <v-icon size="65">mdi-file-document-outline</v-icon>
