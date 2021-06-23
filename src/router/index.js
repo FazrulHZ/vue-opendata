@@ -67,6 +67,15 @@ const routes = [
           )
         },
         {
+          path: '/grup/:slug',
+          component: () => import(
+            /* webpackChunkName: "Grup Detail" */
+            /* webpackPrefetch: true */
+            /* webpackPreload: true */
+            '../views/frontend/grup/grupDetail.vue'
+          )
+        },
+        {
           path: '/listdataset/:slug',
           component: () => import(
             /* webpackChunkName: "List Dataset" */
@@ -133,6 +142,9 @@ const routes = [
         },
         {
           path: '/admin/organisasi',
+          meta: {
+            superadmin: true
+          },
           component: () => import(
             /* webpackChunkName: "adminOrganisasi" */
             /* webpackPrefetch: true */
@@ -142,6 +154,9 @@ const routes = [
         },
         {
           path: '/admin/grup',
+          meta: {
+            superadmin: true
+          },
           component: () => import(
             /* webpackChunkName: "adminGrup" */
             /* webpackPrefetch: true */

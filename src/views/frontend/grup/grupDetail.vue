@@ -4,14 +4,14 @@
       <v-col v-if="dekstop" cols="12" md="3" style="position: sticky; top:70px; align-self: start;">
         <h2>Grup</h2>
         <div class="mt-5">
-          <orgCard />
+          <grupCard />
         </div>
       </v-col>
 
       <v-col v-else cols="12" md="3">
         <h2>Grup</h2>
         <div class="mt-5">
-          <orgCard />
+          <grupCard />
         </div>
       </v-col>
 
@@ -46,11 +46,11 @@
 </template>
 
 <script>
-import orgCard from '@/components/frontend/organisasi/orgCard'
+import grupCard from '@/components/frontend/grup/grupCard'
 
 export default {
   components: {
-    orgCard
+    grupCard
   },
 
   data: () => ({

@@ -36,21 +36,21 @@
           <v-list-item-title>Dataset</v-list-item-title>
         </v-list-item>
 
-        <v-list-item :to="'/admin/organisasi'">
+        <v-list-item v-if="session.user_lvl === 'superadmin'" :to="'/admin/organisasi'">
           <v-list-item-icon>
             <v-icon>mdi-office-building-outline</v-icon>
           </v-list-item-icon>
           <v-list-item-title>Organisasi</v-list-item-title>
         </v-list-item>
 
-        <v-list-item :to="'/admin/grup'">
+        <v-list-item v-if="session.user_lvl === 'superadmin'" :to="'/admin/grup'">
           <v-list-item-icon>
             <v-icon>mdi-format-list-text</v-icon>
           </v-list-item-icon>
           <v-list-item-title>Grup</v-list-item-title>
         </v-list-item>
 
-        <v-divider></v-divider>
+        <v-divider v-if="session.user_lvl === 'superadmin'"></v-divider>
 
         <v-list-item v-if="session.user_lvl === 'superadmin'" :to="'/admin/user'">
           <v-list-item-icon>

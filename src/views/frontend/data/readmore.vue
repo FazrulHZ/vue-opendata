@@ -53,7 +53,7 @@
                           <span class="subtitle-2">Dibuat</span>
                         </v-col>
                         <v-col cols="12" md="9">
-                          <span class="subtitle-2">: {{ data.created_at }}</span>
+                          <span class="subtitle-2">: {{ tglFormat(data.created_at) }}</span>
                         </v-col>
                       </v-row>
                     </div>

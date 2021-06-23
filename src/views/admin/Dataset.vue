@@ -50,6 +50,8 @@
 </template>
 
 <script>
+import Cookie from '@/helper/cookie.js'
+
 import CModalAdd from '@/components/admin/dataset/modalAdd'
 import CModalEdit from '@/components/admin/dataset/modalEdit'
 import CModalDelete from '@/components/admin/dataset/modalDelete'
@@ -116,6 +118,8 @@ export default {
   },
 
   data: () => ({
+    session: '',
+
     datasets: [],
     dataset: {},
 
@@ -132,14 +136,19 @@ export default {
     ]
   }),
 
-  mounted() {
+  async mounted() {
+    this.session = await JSON.parse(Cookie.dec(Cookie.get('myCookie')))
     this.getData()
   },
 
   methods: {
     getData() {
       this.http
-        .get(process.env.VUE_APP_API_BASE + 'dataset')
+        .get(process.env.VUE_APP_API_BASE + 'dataset/admin/getdata', {
+          headers: {
+            Authorization: 'Bearer ' + this.session.token
+          }
+        })
         .then(res => {
           refreshView.commit('refreshData', false)
           this.datasets = res.data.data
