@@ -25,18 +25,32 @@
           <v-text-field label="Cari Dataset" append-icon="mdi-magnify" solo rounded></v-text-field>
         </div>
 
-        <div><span class="font-weight-black">12</span> <span>Dataset ditemukan</span></div>
+        <div>
+          <span class="font-weight-black">{{ count }}</span> <span>Dataset ditemukan</span>
+        </div>
 
-        <v-card to="/readmore" class="mt-5">
+        <div class="mt-2" v-if="datasets.length === 0">
+          <v-alert outlined type="error"> Belum Ada <strong>Dataset</strong> Untuk <strong>Organisasi</strong> Ini </v-alert>
+        </div>
+
+        <v-card v-else v-for="item in datasets" :key="item.dataset_id" :to="'/dataset/' + item.dataset_slug" class="mt-5">
           <v-row no-gutters class="py-5">
             <v-col cols="2" class="my-auto text-center">
               <v-icon size="65" color="primary">mdi-file-document-outline</v-icon>
             </v-col>
             <v-col cols="10">
               <div class="font-weight-black primary--text">
-                What is Lorem Ipsum?
+                {{ item.dataset_nama }}
               </div>
-              Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type
+
+              <v-row no-gutters class="my-1">
+                <div class="grey--text mr-5">
+                  <v-icon color="grey" small class="mr-2">mdi-clock-time-nine-outline</v-icon>
+                  <span class="caption">{{ tglFormat(item.datasetCreated) }}</span>
+                </div>
+              </v-row>
+
+              {{ item.dataset_deskripsi }}
             </v-col>
           </v-row>
         </v-card>
@@ -54,12 +68,48 @@ export default {
   },
 
   data: () => ({
-    dekstop: true
+    dekstop: true,
+
+    get_slug: '',
+
+    count: 0,
+    datasets: []
   }),
 
   created() {
     if (this.$vuetify.breakpoint.name === 'xs' || this.$vuetify.breakpoint.name === 'sm') {
       this.dekstop = false
+    }
+
+    this.get_slug = this.$route.params.slug
+  },
+
+  mounted() {
+    this.getDataset()
+  },
+
+  methods: {
+    getDataset() {
+      this.http
+        .get(process.env.VUE_APP_API_BASE + 'grup/dataset/' + this.get_slug)
+        .then(res => {
+          this.datasets = res.data.data
+          this.count = res.data.count
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+
+    tglFormat(tgl) {
+      const date = new Date(tgl)
+      const dateTimeFormat = new Intl.DateTimeFormat('id', {
+        year: 'numeric',
+        month: 'long',
+        day: '2-digit'
+      })
+      const formatted = dateTimeFormat.formatToParts(date)
+      return formatted[0].value + ' ' + formatted[2].value + ' ' + formatted[4].value
     }
   }
 }
