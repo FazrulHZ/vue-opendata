@@ -193,6 +193,15 @@ const routes = [
             /* webpackPreload: true */
             '../views/admin/User.vue'
           )
+        },
+        {
+          path: '/admin/profil',
+          component: () => import(
+            /* webpackChunkName: "adminProfil" */
+            /* webpackPrefetch: true */
+            /* webpackPreload: true */
+            '../views/admin/Profil.vue'
+          )
         }
       ]
   }

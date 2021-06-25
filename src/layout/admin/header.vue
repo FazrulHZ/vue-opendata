@@ -24,7 +24,7 @@
               <h4>{{ session.user_fullname }}</h4>
             </div>
             <v-divider></v-divider>
-            <v-btn depressed text>
+            <v-btn depressed text @click="profil()">
               Profil
             </v-btn>
             <v-divider></v-divider>
@@ -68,6 +68,10 @@ export default {
     logOut() {
       Cookie.delete()
       this.$router.push('/login')
+    },
+
+    profil() {
+      this.$router.push('/admin/profil')
     }
   }
 }

@@ -3,7 +3,6 @@
     <div>
       <v-img :src="getIMG(data.org_foto)"></v-img>
     </div>
-    {{ data.org_foto }}
 
     <div class="mt-5">
       <h3>{{ data.org_nama }}</h3>

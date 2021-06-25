@@ -30,7 +30,7 @@
         </div>
 
         <div class="mt-2" v-if="datasets.length === 0">
-          <v-alert outlined type="error"> Belum Ada <strong>Dataset</strong> Untuk <strong>Organisasi</strong> Ini </v-alert>
+          <v-alert outlined type="error"> Belum Ada <strong>Dataset</strong> Untuk <strong>Grup</strong> Ini </v-alert>
         </div>
 
         <v-card v-else v-for="item in datasets" :key="item.dataset_id" :to="'/dataset/' + item.dataset_slug" class="mt-5">

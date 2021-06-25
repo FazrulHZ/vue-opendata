@@ -3,7 +3,6 @@
     <div>
       <v-img :src="getIMG(grup.grup_foto)"></v-img>
     </div>
-    {{ grup.grup_foto }}
 
     <div class="mt-5">
       <h3>{{ grup.grup_nama }}</h3>
