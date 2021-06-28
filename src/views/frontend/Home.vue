@@ -12,7 +12,7 @@
             DATASET TERBARU
           </v-card-title>
           <v-card-text v-for="item in datasets" :key="item.id">
-            <v-card flat :to="'/readmore/' + item.dataset_slug">
+            <v-card flat :to="'/dataset/' + item.dataset_slug">
               <div>
                 <div class="font-weight-black">
                   {{ item.dataset_nama }}

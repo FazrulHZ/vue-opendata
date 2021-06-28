@@ -11,7 +11,6 @@
         <v-row align="center" justify="center">
           <v-text-field label="Cari Data Apa?" append-icon="mdi-folder-search-outline" solo rounded class="ml-12 mr-12"></v-text-field>
         </v-row>
-        <!-- <v-text-field label="Append" append-icon="mdi-map-marker" solo></v-text-field> -->
       </v-img>
     </div>
 
