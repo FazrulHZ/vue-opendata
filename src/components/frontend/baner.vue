@@ -44,9 +44,8 @@
           <h1>KOTA GORONTALO</h1>
         </div>
         <v-row align="center" justify="center">
-          <v-text-field label="Cari Data Apa?" append-icon="mdi-folder-search-outline" solo rounded class="ml-12 mr-12"></v-text-field>
+          <v-text-field v-model="cariDataset" label="Cari Data Apa?" append-icon="mdi-folder-search-outline" solo rounded class="mx-12" v-on:keyup.enter="cariData"></v-text-field>
         </v-row>
-        <!-- <v-text-field label="Append" append-icon="mdi-map-marker" solo></v-text-field> -->
       </v-img>
     </div>
   </div>
@@ -54,12 +53,16 @@
 
 <script>
 import Cookie from '@/helper/cookie.js'
+// import postCari from '@/store/cari'
 
 export default {
   name: 'baner',
 
   data: () => ({
     session: '',
+
+    cariDataset: '',
+
     topHeader: true,
     bg: 'transparent',
     dekstop: true,
@@ -96,6 +99,24 @@ export default {
         this.mxW = 250
         this.appH = 90
       }
+    },
+
+    cariData() {
+      // const data = { dataset_nama: this.cariDataset }
+      // this.http
+      //   .post(process.env.VUE_APP_API_BASE + 'dataset/cari', data)
+      //   .then(async res => {
+      //     let dataset = []
+
+      //     dataset = await res.data.data
+      //     await postCari.commit('postDataset', dataset)
+      //     this.$router.push({ path: '/dataset', query: { cari: this.cariDataset } })
+      //   })
+      //   .catch(err => {
+      //     console.log(err)
+      //     this.cariLoading = false
+      //   })
+      this.$router.push({ path: '/dataset', query: { cari: this.cariDataset } })
     },
 
     home() {

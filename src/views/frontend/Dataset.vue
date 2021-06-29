@@ -75,6 +75,13 @@ export default {
     datasets: []
   }),
 
+  async created() {
+    if (this.$route.query.cari !== undefined) {
+      this.cariDataset = await this.$route.query.cari
+      this.cariData()
+    }
+  },
+
   mounted() {
     this.getData()
   },

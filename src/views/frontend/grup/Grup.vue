@@ -21,7 +21,7 @@
                 <v-img :src="getIMG(item.grup_foto)" max-height="200"></v-img>
               </v-col>
               <v-col cols="12" class="text-center mt-3">
-                <span>{{ item.grup_nama }}</span>
+                <span class="subtitle-2">{{ item.grup_nama }}</span>
               </v-col>
               <v-col cols="12" class="text-center mt-3">
                 <v-divider class="mb-3"></v-divider>
