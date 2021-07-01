@@ -43,6 +43,13 @@
           <v-list-item-title>Grup</v-list-item-title>
         </v-list-item>
 
+        <v-list-item :to="'/infografis'">
+          <v-list-item-icon>
+            <v-icon>mdi-folder-image</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title>Infografis</v-list-item-title>
+        </v-list-item>
+
         <v-divider></v-divider>
 
         <v-list-item :to="'/login'">

@@ -101,6 +101,15 @@ const routes = [
             /* webpackPreload: true */
             '../views/frontend/data/readmore.vue'
           )
+        },
+        {
+          path: '/infografis',
+          component: () => import(
+            /* webpackChunkName: "Infografis" */
+            /* webpackPrefetch: true */
+            /* webpackPreload: true */
+            '../views/frontend/Infografis.vue'
+          )
         }
       ]
   },

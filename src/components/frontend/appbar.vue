@@ -22,6 +22,10 @@
           Grup
         </v-btn>
 
+        <v-btn text dark @click="infografis()">
+          Infografis
+        </v-btn>
+
         <v-btn v-if="session.session_ok" text dark @click="dashboard()">
           Dashboard
         </v-btn>
@@ -64,6 +68,10 @@ export default {
 
     grup() {
       this.$router.push('/grup').catch(() => {})
+    },
+
+    infografis() {
+      this.$router.push('/infografis').catch(() => {})
     },
 
     login() {
