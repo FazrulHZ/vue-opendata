@@ -1,5 +1,14 @@
 <template>
   <div>
+    <div>
+      <v-alert v-model="alertBerhasil" type="success" dense dismissible>
+        {{ alertMassage }}
+      </v-alert>
+      <v-alert v-model="alertGagal" type="error" dense dismissible>
+        {{ alertMassage }}
+      </v-alert>
+    </div>
+
     <v-row>
       <v-col cols="12" md="5">
         <v-card class="pa-5">
@@ -121,6 +130,7 @@ export default {
 
   watch: {
     refresh() {
+      window.scrollTo(0, 0)
       this.getData()
       setTimeout(() => {
         this.alertGagal = false

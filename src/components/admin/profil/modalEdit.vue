@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="ModalAdd" :width="CWidth">
+  <v-dialog v-model="ModalEdit" :width="CWidth">
     <template v-slot:activator="{ on: modal, attrs }">
       <v-tooltip bottom>
         <template v-slot:activator="{ on: tooltip }">
@@ -69,7 +69,7 @@
 
           <hr />
           <div class="text-right mt-5 pb-5">
-            <v-btn v-if="btnLoading" small color="primary" depressed @click="add()">SIMPAN</v-btn>
+            <v-btn v-if="btnLoading" small color="primary" depressed @click="edit()">SIMPAN</v-btn>
             <v-btn v-else small color="primary" depressed loading>SIMPAN</v-btn>
           </div>
         </div>
@@ -92,7 +92,7 @@ export default {
 
   data: () => ({
     session: '',
-    ModalAdd: false,
+    ModalEdit: false,
     btnLoading: true,
     show: false,
     CWidth: '70%',
@@ -117,15 +117,35 @@ export default {
 
     async openModal() {
       this.session = await JSON.parse(Cookie.dec(Cookie.get('myCookie')))
-      this.ModalAdd = true
+      await this.getData()
+      this.urlImage = this.user_foto === '' ? process.env.VUE_APP_API_BASE + 'upload/userGambar/default.png' : process.env.VUE_APP_API_BASE + 'upload/userGambar/' + this.user_foto
+      this.ModalEdit = true
     },
 
     closeModal() {
       this.default()
-      this.ModalAdd = false
+      this.ModalEdit = false
     },
 
-    async add() {
+    getData() {
+      this.http
+        .get(process.env.VUE_APP_API_BASE + 'users/' + this.session.user_nama, {
+          headers: {
+            Authorization: 'Bearer ' + this.session.token
+          }
+        })
+        .then(res => {
+          console.log(res.data.data)
+          this.user_nama = res.data.data.user_nama
+          this.user_email = res.data.data.user_email
+          this.user_fullname = res.data.data.user_fullname
+        })
+        .catch(err => {
+          console.log(err)
+        })
+    },
+
+    async edit() {
       this.btnLoading = false
 
       const data = new FormData()
@@ -133,13 +153,11 @@ export default {
       data.append('user_email', this.user_email)
       data.append('user_fullname', this.user_fullname)
       data.append('user_password', this.user_password)
-      data.append('user_lvl', this.user_lvl)
       data.append('user_foto', this.user_foto)
-      data.append('org_id', this.org_id)
 
       const url = process.env.VUE_APP_API_BASE + 'users/update/datamandiri'
       this.http
-        .post(url, data, {
+        .put(url, data, {
           headers: {
             Authorization: 'Bearer ' + this.session.token
           }
