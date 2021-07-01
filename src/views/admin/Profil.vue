@@ -3,6 +3,10 @@
     <v-row>
       <v-col cols="12" md="5">
         <v-card class="pa-5">
+          <div class="text-right">
+            <CModalEdit />
+          </div>
+
           <div class="text-center">
             <v-avatar size="200">
               <img :src="getIMG(user.user_foto)" alt="..." style="border: 1px solid #CCC; object-fit: cover;" />
@@ -65,8 +69,66 @@
 
 <script>
 import Cookie from '@/helper/cookie.js'
+import refreshView from '@/store/profil/viewProfil'
+
+import CModalEdit from '@/components/admin/profil/modalEdit'
 
 export default {
+  components: {
+    CModalEdit
+  },
+
+  computed: {
+    refresh: {
+      get() {
+        return refreshView.state.Refresh
+      }
+    },
+
+    alertMassage: {
+      get() {
+        return refreshView.state.alertMassage
+      }
+    },
+
+    success: {
+      get() {
+        return refreshView.state.success
+      },
+      set(value) {
+        refreshView.commit('alert', value)
+      }
+    },
+
+    alertBerhasil: {
+      get() {
+        return refreshView.state.alertBerhasil
+      },
+      set(value) {
+        refreshView.commit('berhasilAlert', value)
+      }
+    },
+
+    alertGagal: {
+      get() {
+        return refreshView.state.alertGagal
+      },
+      set(value) {
+        refreshView.commit('gagalAlert', value)
+      }
+    }
+  },
+
+  watch: {
+    refresh() {
+      this.getData()
+      setTimeout(() => {
+        this.alertGagal = false
+        this.alertBerhasil = false
+      }, 5000)
+    }
+  },
+
   data: () => ({
     session: '',
 
@@ -103,6 +165,7 @@ export default {
           }
         })
         .then(res => {
+          refreshView.commit('refreshData', false)
           this.user = res.data.data
         })
         .catch(err => {

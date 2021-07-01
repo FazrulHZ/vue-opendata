@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="modalEdit" max-width="50%">
+  <v-dialog v-model="modalEdit" :width="CWidth">
     <v-card>
       <v-toolbar dark color="primary" dense flat>
         <v-toolbar-title class="subtitle-1">Edit Data grup</v-toolbar-title>
@@ -58,6 +58,12 @@ import modalEdit from '@/store/grup/modalEdit'
 import refreshView from '@/store/grup/viewGrup'
 
 export default {
+  created() {
+    if (this.$vuetify.breakpoint.name === 'xs' || this.$vuetify.breakpoint.name === 'sm') {
+      this.CWidth = '100%'
+    }
+  },
+
   computed: {
     modalEdit: {
       get() {
@@ -86,6 +92,7 @@ export default {
   data: () => ({
     session: '',
     btnLoading: true,
+    CWidth: '70%',
 
     grup_foto: '',
     urlImage: ''

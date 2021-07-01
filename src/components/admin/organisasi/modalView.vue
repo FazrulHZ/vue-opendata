@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="modalView" max-width="50%">
+  <v-dialog v-model="modalView" :width="CWidth">
     <v-card>
       <v-toolbar dark color="primary" dense flat>
         <v-toolbar-title class="subtitle-1">Detail Organisasi</v-toolbar-title>
@@ -38,6 +38,12 @@
 import modalView from '@/store/organisasi/modalView'
 
 export default {
+  created() {
+    if (this.$vuetify.breakpoint.name === 'xs' || this.$vuetify.breakpoint.name === 'sm') {
+      this.CWidth = '100%'
+    }
+  },
+
   computed: {
     modalView: {
       get() {
@@ -57,7 +63,9 @@ export default {
     }
   },
 
-  data: () => ({}),
+  data: () => ({
+    CWidth: '70%'
+  }),
 
   methods: {
     getIMG(value) {

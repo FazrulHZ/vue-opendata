@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="ModalAdd" max-width="50%">
+  <v-dialog v-model="ModalAdd" :width="CWidth">
     <template v-slot:activator="{ on: modal, attrs }">
       <v-tooltip bottom>
         <template v-slot:activator="{ on: tooltip }">
@@ -60,10 +60,17 @@
 import Cookie from '@/helper/cookie.js'
 import refreshView from '@/store/grup/viewGrup'
 export default {
+  created() {
+    if (this.$vuetify.breakpoint.name === 'xs' || this.$vuetify.breakpoint.name === 'sm') {
+      this.CWidth = '100%'
+    }
+  },
+
   data: () => ({
     session: '',
     ModalAdd: false,
     btnLoading: true,
+    CWidth: '70%',
 
     grup_nama: '',
     grup_foto: '',
