@@ -4,7 +4,11 @@
       <v-breadcrumbs :items="items" large></v-breadcrumbs>
     </v-card>
 
-    <div class="mt-10">
+    <div class="mt-10" v-if="infografis.length === 0">
+      <v-alert outlined type="error"> Belum Ada <strong>Infografis</strong> Untuk Saat Ini </v-alert>
+    </div>
+
+    <div class="mt-10" v-else>
       <v-row>
         <v-col cols="12" md="4" v-for="item in infografis" :key="item.infografis_id">
           <v-card outlined height="400" style="overflow-y: scroll" @click="showIMG(item.infografis_foto)">
