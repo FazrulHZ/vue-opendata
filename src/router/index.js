@@ -202,6 +202,18 @@ const routes = [
             /* webpackPreload: true */
             '../views/admin/Profil.vue'
           )
+        },
+        {
+          path: '/admin/infografis',
+          meta: {
+            superadmin: true
+          },
+          component: () => import(
+            /* webpackChunkName: "adminInfografis" */
+            /* webpackPrefetch: true */
+            /* webpackPreload: true */
+            '../views/admin/Infografis.vue'
+          )
         }
       ]
   }

@@ -52,6 +52,13 @@
 
         <v-divider v-if="session.user_lvl === 'superadmin'"></v-divider>
 
+        <v-list-item v-if="session.user_lvl === 'superadmin'" :to="'/admin/infografis'">
+          <v-list-item-icon>
+            <v-icon>mdi-folder-image</v-icon>
+          </v-list-item-icon>
+          <v-list-item-title>Infografis</v-list-item-title>
+        </v-list-item>
+
         <v-list-item v-if="session.user_lvl === 'superadmin'" :to="'/admin/user'">
           <v-list-item-icon>
             <v-icon>mdi-account-outline</v-icon>
