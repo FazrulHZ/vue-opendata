@@ -2,7 +2,7 @@
   <v-dialog v-model="modalEdit" :width="CWidth">
     <v-card>
       <v-toolbar dark color="primary" dense flat>
-        <v-toolbar-title class="subtitle-1">Edit Data grup</v-toolbar-title>
+        <v-toolbar-title class="subtitle-1">Edit Infografis</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-btn icon dark @click="closeModal()">
           <v-icon>mdi-close</v-icon>
@@ -11,34 +11,46 @@
 
       <v-form ref="form">
         <div class="px-5 py-5">
-          <!-- Nama Grup -->
-          <v-col cols="12" class="mb-n8">
-            <span class="subtitle-2">Nama Grup</span>
-            <v-text-field dense flat outlined class="mt-2" v-model="editedItem.grup_nama"></v-text-field>
-          </v-col>
+          <v-row>
+            <v-col cols="12" md="6" class="my-auto">
+              <v-col cols="12" v-if="!urlImage">
+                <v-card class="d-flex align-center justify-center pa-5" outlined height="400">
+                  <div>
+                    <v-icon>mdi-image</v-icon>
+                    <span>Preview Image</span>
+                  </div>
+                </v-card>
+              </v-col>
 
-          <!-- Deskripsi Grup -->
-          <v-col cols="12" class="mb-n8">
-            <span class="subtitle-2">Deskripsi Grup</span>
-            <v-textarea dense flat outlined class="mt-2" v-model="editedItem.grup_deskripsi"></v-textarea>
-          </v-col>
+              <v-col cols="12" v-else>
+                <v-card class="d-flex align-center justify-center" outlined height="400" style="overflow-y: scroll">
+                  <div>
+                    <v-img :src="urlImage" max-width="380"></v-img>
+                  </div>
+                </v-card>
+              </v-col>
+            </v-col>
 
-          <!-- Preview -->
-          <v-col cols="12">
-            <span class="subtitle-2">Foto Grup</span>
-            <v-img :src="getIMG(editedItem.grup_foto)" max-width="200"></v-img>
-          </v-col>
+            <v-col cols="12" md="6">
+              <!-- Nama Infografis -->
+              <v-col cols="12" class="mb-n8">
+                <span class="subtitle-2">Nama Infografis</span>
+                <v-text-field dense flat outlined class="mt-2" v-model="editedItem.infografis_nama"></v-text-field>
+              </v-col>
 
-          <!-- Foto -->
-          <v-col cols="12" class="mb-n8">
-            <span class="subtitle-2">Unggah Foto Baru</span>
-            <v-file-input dense flat outlined prepend-icon accept="image/png, image/jpeg, image/bmp" placeholder="Pilih Foto grup" append-icon="mdi-camera" @change="onFile" ref="avatar"></v-file-input>
-          </v-col>
+              <!-- Deskripsi Infografis -->
+              <v-col cols="12" class="mb-n8">
+                <span class="subtitle-2">Deskripsi Infografis</span>
+                <v-textarea dense flat outlined class="mt-2" v-model="editedItem.infografis_deskripsi"></v-textarea>
+              </v-col>
 
-          <!-- Preview -->
-          <v-col cols="12">
-            <v-img :src="urlImage" max-width="200"></v-img>
-          </v-col>
+              <!-- Gambar -->
+              <v-col cols="12">
+                <span class="subtitle-2">Gambar</span>
+                <v-file-input dense flat outlined prepend-icon accept="image/png, image/jpeg, image/bmp" placeholder="Pilih Infografis" append-icon="mdi-camera" @change="onFile" ref="avatar"></v-file-input>
+              </v-col>
+            </v-col>
+          </v-row>
 
           <hr />
           <div class="text-right mr-5 mt-5 pb-5">
@@ -54,8 +66,8 @@
 <script>
 import Cookie from '@/helper/cookie.js'
 
-import modalEdit from '@/store/grup/modalEdit'
-import refreshView from '@/store/grup/viewGrup'
+import modalEdit from '@/store/infografis/modalEdit'
+import refreshView from '@/store/infografis/viewInfografis'
 
 export default {
   created() {
@@ -73,9 +85,10 @@ export default {
         modalEdit.commit('toggleModal', value)
       }
     },
+
     editedItem: {
       get() {
-        return modalEdit.state.grup
+        return modalEdit.state.infografis
       },
       set(value) {
         console.log(value)
@@ -86,6 +99,7 @@ export default {
   watch: {
     async modalEdit() {
       this.session = await JSON.parse(Cookie.dec(Cookie.get('myCookie')))
+      this.urlImage = this.editedItem.infografis_foto === '' ? process.env.VUE_APP_API_BASE + 'upload/organisasiGambar/default.svg' : process.env.VUE_APP_API_BASE + 'upload/infografisGambar/' + this.editedItem.infografis_foto
     }
   },
 
@@ -94,16 +108,15 @@ export default {
     btnLoading: true,
     CWidth: '70%',
 
-    grup_foto: '',
     urlImage: ''
   }),
 
   methods: {
     getIMG(value) {
       if (value) {
-        return process.env.VUE_APP_API_BASE + 'upload/grupGambar/' + value
+        return process.env.VUE_APP_API_BASE + 'upload/infografisGambar/' + value
       } else {
-        return process.env.VUE_APP_API_BASE + 'upload/grupGambar/default.jpg'
+        return process.env.VUE_APP_API_BASE + 'upload/infografisGambar/default.jpg'
       }
     },
 
@@ -111,12 +124,12 @@ export default {
       this.btnLoading = false
 
       const data = new FormData()
-      data.append('grup_id', this.editedItem.grup_id)
-      data.append('grup_nama', this.editedItem.grup_nama)
-      data.append('grup_deskripsi', this.editedItem.grup_deskripsi)
-      data.append('grup_foto', this.grup_foto)
+      data.append('infografis_id', this.editedItem.infografis_id)
+      data.append('infografis_nama', this.editedItem.infografis_nama)
+      data.append('infografis_deskripsi', this.editedItem.infografis_deskripsi)
+      data.append('infografis_foto', this.infografis_foto)
 
-      const url = process.env.VUE_APP_API_BASE + 'grup'
+      const url = process.env.VUE_APP_API_BASE + 'infografis'
       this.http
         .put(url, data, {
           headers: {
@@ -153,8 +166,8 @@ export default {
     },
 
     onFile(value) {
-      this.grup_foto = value
-      this.urlImage = URL.createObjectURL(this.grup_foto)
+      this.infografis_foto = value
+      this.urlImage = URL.createObjectURL(this.infografis_foto)
     },
 
     closeModal() {

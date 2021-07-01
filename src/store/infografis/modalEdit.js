@@ -6,12 +6,12 @@ Vue.use(Vuex)
 export default new Vuex.Store({
     state: {
         modalEdit: false,
-        grup: {
-            grup_id: '',
-            grup_nama: '',
-            grup_slug: '',
-            grup_foto: '',
-            grup_deskripsi: '',
+        infografis: {
+            infografis_id: '',
+            infografis_nama: '',
+            infografis_slug: '',
+            infografis_foto: '',
+            infografis_deskripsi: '',
             created_at: ''
         }
     },
@@ -21,7 +21,7 @@ export default new Vuex.Store({
             state.modalEdit = value
         },
         viewModal(state, value) {
-            state.grup = value
+            state.infografis = value
         }
     }
 })

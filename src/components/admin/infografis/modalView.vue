@@ -2,7 +2,7 @@
   <v-dialog v-model="modalView" :width="CWidth">
     <v-card>
       <v-toolbar dark color="primary" dense flat>
-        <v-toolbar-title class="subtitle-1">Detail grup</v-toolbar-title>
+        <v-toolbar-title class="subtitle-1">Detail Infografis</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-btn icon dark @click="closeModal()">
           <v-icon>mdi-close</v-icon>
@@ -11,23 +11,31 @@
 
       <v-form ref="form">
         <div class="px-5 py-5">
-          <!-- Nama Grup -->
-          <v-col cols="12" class="mb-n8">
-            <span class="subtitle-2">Nama Grup</span>
-            <v-text-field dense flat outlined class="mt-2" v-model="viewItem.grup_nama" readonly></v-text-field>
-          </v-col>
+          <v-row>
+            <v-col cols="12" md="6" class="my-auto">
+              <v-col cols="12">
+                <v-card class="d-flex align-center justify-center" outlined height="400" style="overflow-y: scroll">
+                  <div>
+                    <v-img :src="getIMG(viewItem.infografis_foto)" max-width="380"></v-img>
+                  </div>
+                </v-card>
+              </v-col>
+            </v-col>
 
-          <!-- Deskripsi Grup -->
-          <v-col cols="12" class="mb-n8">
-            <span class="subtitle-2">Deskripsi Grup</span>
-            <v-textarea dense flat outlined class="mt-2" v-model="viewItem.grup_deskripsi" readonly></v-textarea>
-          </v-col>
+            <v-col cols="12" md="6">
+              <!-- Nama Infografis -->
+              <v-col cols="12" class="mb-n8">
+                <span class="subtitle-2">Nama Infografis</span>
+                <v-text-field dense flat outlined class="mt-2" v-model="viewItem.infografis_nama" readonly></v-text-field>
+              </v-col>
 
-          <!-- Preview -->
-          <v-col cols="12">
-            <span class="subtitle-2">Foto Grup</span>
-            <v-img :src="getIMG(viewItem.grup_foto)" max-width="200"></v-img>
-          </v-col>
+              <!-- Deskripsi Infografis -->
+              <v-col cols="12">
+                <span class="subtitle-2">Deskripsi Infografis</span>
+                <v-textarea dense flat outlined class="mt-2" v-model="viewItem.infografis_deskripsi" readonly></v-textarea>
+              </v-col>
+            </v-col>
+          </v-row>
         </div>
       </v-form>
     </v-card>
@@ -35,7 +43,7 @@
 </template>
 
 <script>
-import modalView from '@/store/grup/modalView'
+import modalView from '@/store/infografis/modalView'
 
 export default {
   created() {
@@ -53,9 +61,10 @@ export default {
         modalView.commit('toggleModal', value)
       }
     },
+
     viewItem: {
       get() {
-        return modalView.state.grup
+        return modalView.state.infografis
       },
       set(value) {
         console.log(value)
@@ -70,9 +79,9 @@ export default {
   methods: {
     getIMG(value) {
       if (value) {
-        return process.env.VUE_APP_API_BASE + 'upload/grupGambar/' + value
+        return process.env.VUE_APP_API_BASE + 'upload/infografisGambar/' + value
       } else {
-        return process.env.VUE_APP_API_BASE + 'upload/grupGambar/default.jpg'
+        return process.env.VUE_APP_API_BASE + 'upload/organisasiGambar/default.svg'
       }
     },
 

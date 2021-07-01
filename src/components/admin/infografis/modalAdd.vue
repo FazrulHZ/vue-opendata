@@ -41,6 +41,7 @@
                 </v-card>
               </v-col>
             </v-col>
+
             <v-col cols="12" md="6">
               <!-- Nama Infografis -->
               <v-col cols="12" class="mb-n8">
@@ -54,10 +55,10 @@
                 <v-textarea dense flat outlined class="mt-2" v-model="infografis_deskripsi"></v-textarea>
               </v-col>
 
-              <!-- Foto -->
+              <!-- Gambar -->
               <v-col cols="12">
-                <span class="subtitle-2">Foto</span>
-                <v-file-input dense flat outlined prepend-icon accept="image/png, image/jpeg, image/bmp" placeholder="Pilih Foto infografis" append-icon="mdi-camera" @change="onFile" ref="avatar"></v-file-input>
+                <span class="subtitle-2">Gambar</span>
+                <v-file-input dense flat outlined prepend-icon accept="image/png, image/jpeg, image/bmp" placeholder="Pilih Infografis" append-icon="mdi-camera" @change="onFile" ref="avatar"></v-file-input>
               </v-col>
             </v-col>
           </v-row>
