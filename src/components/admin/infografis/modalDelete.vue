@@ -2,7 +2,7 @@
   <v-dialog v-model="modalHapus" max-width="50%">
     <v-card>
       <v-toolbar dark color="primary" dense flat>
-        <v-toolbar-title class="subtitle-1">Hapus Data Grup</v-toolbar-title>
+        <v-toolbar-title class="subtitle-1">Hapus Data Infografis</v-toolbar-title>
         <v-spacer></v-spacer>
         <v-btn icon dark @click="closeModal()">
           <v-icon>mdi-close</v-icon>
@@ -34,8 +34,8 @@
 <script>
 import Cookie from '@/helper/cookie.js'
 
-import modalHapus from '@/store/grup/modalHapus'
-import refreshView from '@/store/grup/viewGrup'
+import modalHapus from '@/store/infografis/modalHapus'
+import refreshView from '@/store/infografis/viewInfografis'
 
 export default {
   computed: {
@@ -49,7 +49,7 @@ export default {
     },
     hapusItem: {
       get() {
-        return modalHapus.state.grup
+        return modalHapus.state.infografis
       },
       set(value) {
         console.log(value)
@@ -72,7 +72,7 @@ export default {
     async hapus() {
       this.btnLoading = false
 
-      const url = process.env.VUE_APP_API_BASE + 'grup/' + this.hapusItem.grup_id
+      const url = process.env.VUE_APP_API_BASE + 'infografis/' + this.hapusItem.infografis_id
       this.http
         .delete(url, {
           headers: {
