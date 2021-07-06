@@ -62,12 +62,21 @@
               </v-row>
             </div>
           </div>
-          <v-divider class="my-5"></v-divider>
+          <v-divider class="my-3"></v-divider>
           <div class="text-right">
-            <v-btn color="primary" depressed @click="download">
-              <v-icon>mdi-download</v-icon>
+            <v-btn small class="mr-2" color="green" dark depressed @click="viewData">
+              <v-icon class="mr-2">mdi-eye</v-icon>
+              Lihat Data
+            </v-btn>
+            <v-btn small color="primary" depressed @click="download">
+              <v-icon class="mr-2">mdi-download</v-icon>
               Unduh
             </v-btn>
+          </div>
+
+          <v-divider class="my-3"></v-divider>
+          <div class="mt-5">
+            <viewCSV :dataCSV="csvData" />
           </div>
         </v-col>
       </v-row>
@@ -77,9 +86,12 @@
 
 <script>
 import orgCard from '@/components/frontend/data/orgCard'
+import viewCSV from '@/components/frontend/data/viewCSV'
+
 export default {
   components: {
-    orgCard
+    orgCard,
+    viewCSV
   },
 
   created() {
@@ -93,7 +105,8 @@ export default {
     dekstop: true,
     get_slug: '',
 
-    data: {}
+    data: {},
+    csvData: []
   }),
 
   mounted() {
@@ -125,6 +138,18 @@ export default {
 
     download() {
       window.location = process.env.VUE_APP_API_BASE + 'upload/data/' + this.data.data_file
+    },
+
+    viewData() {
+      this.http
+        .get(process.env.VUE_APP_API_BASE + 'data/papaparse/' + this.data.data_file)
+        .then(res => {
+          this.csvData = res.data.data
+          console.log(this.csvData)
+        })
+        .catch(err => {
+          console.log(err)
+        })
     }
   }
 }
