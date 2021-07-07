@@ -6,12 +6,12 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
     state: {
-        view: false
+        View: false
     },
 
     mutations: {
         viewCSV(state, value) {
-            state.view = value
+            state.View = value
         }
     }
 })

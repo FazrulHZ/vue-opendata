@@ -75,7 +75,18 @@
           </div>
 
           <v-divider class="my-3"></v-divider>
-          <div class="mt-5">
+          <div v-if="loading" class="mt-5">
+            <v-row class="fill-height" align-content="center" justify="center">
+              <v-col class="text-subtitle-1 text-center" cols="12">
+                Mempersiapkan Data
+              </v-col>
+              <v-col cols="8" class="mt-n5">
+                <v-progress-linear color="primary" indeterminate rounded height="6"></v-progress-linear>
+              </v-col>
+            </v-row>
+          </div>
+
+          <div v-else class="mt-5">
             <viewCSV :dataCSV="csvData" />
           </div>
         </v-col>
@@ -104,6 +115,7 @@ export default {
 
   data: () => ({
     dekstop: true,
+    loading: false,
     get_slug: '',
 
     data: {},
@@ -142,12 +154,14 @@ export default {
     },
 
     viewData() {
+      this.loading = true
       this.http
         .get(process.env.VUE_APP_API_BASE + 'data/papaparse/' + this.data.data_file)
         .then(res => {
-          openCSV.commit('viewCSV', true)
-          console.log(openCSV.state.view)
           this.csvData = res.data.data
+          this.loading = false
+          openCSV.commit('viewCSV', true)
+          console.log(openCSV.state.View)
         })
         .catch(err => {
           console.log(err)

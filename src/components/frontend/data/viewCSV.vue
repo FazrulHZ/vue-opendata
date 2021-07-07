@@ -14,7 +14,7 @@ export default {
   computed: {
     refresh: {
       get() {
-        return openCSV.state.view
+        return openCSV.state.View
       }
     }
   },
@@ -27,12 +27,11 @@ export default {
 
   data: () => ({
     search: '',
-    kolom: 0,
     headers: []
   }),
 
   mounted() {
-    this.kolom = this.headers.length
+    this.openCSV()
   },
 
   methods: {
