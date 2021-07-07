@@ -87,6 +87,7 @@
 <script>
 import orgCard from '@/components/frontend/data/orgCard'
 import viewCSV from '@/components/frontend/data/viewCSV'
+import openCSV from '@/store/viewCSV'
 
 export default {
   components: {
@@ -144,8 +145,9 @@ export default {
       this.http
         .get(process.env.VUE_APP_API_BASE + 'data/papaparse/' + this.data.data_file)
         .then(res => {
+          openCSV.commit('viewCSV', true)
+          console.log(openCSV.state.view)
           this.csvData = res.data.data
-          console.log(this.csvData)
         })
         .catch(err => {
           console.log(err)
