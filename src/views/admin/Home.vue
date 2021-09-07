@@ -107,22 +107,22 @@ export default {
         .catch(err => {
           console.log(err)
         })
-    },
-
-    getGrup() {
-      this.http
-        .get(process.env.VUE_APP_API_BASE + 'grup/user/grup', {
-          headers: {
-            Authorization: 'Bearer ' + this.session.token
-          }
-        })
-        .then(res => {
-          this.jumlahGrup = res.data.count
-        })
-        .catch(err => {
-          console.log(err)
-        })
     }
+
+    // getGrup() {
+    //   this.http
+    //     .get(process.env.VUE_APP_API_BASE + 'grup/user/grup', {
+    //       headers: {
+    //         Authorization: 'Bearer ' + this.session.token
+    //       }
+    //     })
+    //     .then(res => {
+    //       this.jumlahGrup = res.data.count
+    //     })
+    //     .catch(err => {
+    //       console.log(err)
+    //     })
+    // }
   }
 }
 </script>

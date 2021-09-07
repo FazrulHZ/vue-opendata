@@ -37,10 +37,7 @@ export default {
   methods: {
     async openCSV() {
       await this.dataCSV.meta.fields.forEach((value, index) => {
-        // this.headers.push(value)
         this.headers.push({ text: value, value: value, sortable: false, width: '300' })
-        // console.log(value)
-        // console.log(index)
       })
       openCSV.commit('viewCSV', false)
     }
